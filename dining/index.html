@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宮古島・飯店高級餐廳選介</title>
+<meta name="description" content="宮古島各大度假飯店的高級餐廳：地點、離瑰麗車程、價位、訂位方式與照片，供 10 人親子團挑選 9/26–27 午晚餐。">
+<style>
+:root{
+    /* 水墨畫意版統一色票（2026-07-05 接入）：宣紙暖底＋珊瑚橘一抹重點色 */
+    --navy:#4a3a28; --navy-deep:#332818;      /* 原深藍改深墨茶（標題與實色填底） */
+    --gold:#c39140; --gold-soft:#e8d2a8;
+    --copper:#1f8a9d; --copper-soft:#5fb3c2;  /* 宮古藍（珊瑚礁海的藍綠，全站重點色） */
+    --grass:#5c8a5a;
+    --ink:#26201a; --paper:#EDE4D3; --card:#fbf6ec;
+    --line:#d9cbb2; --tip-bg:#e7dcc5;
+    --red:#b04a3a; --warn-bg:#f6e3d3;
+    /* 情境幕 token（沿用 ink-painterly-deck） */
+    --paper-2:#E6DBC7; --paper-hi:#f6efe1;
+    --sunset:#1f8a9d; --ocean:#cf7a5a; --ink-soft:#5a4c3c;
+    --serif-en:'Didot','Bodoni 72','Cormorant Garamond',Georgia,serif;
+    --t-slow:2.6s; --t-med:1.1s; --ease-ink:cubic-bezier(.22,1,.36,1);
+  }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:"Noto Serif TC","Songti TC","STSong","PingFang TC",Georgia,serif;
+    background:var(--paper);color:var(--ink);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+@keyframes tickm{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.ink-cover{
+    position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:40px 28px 116px;
+    background:linear-gradient(180deg,var(--paper-hi) 0%,var(--paper) 46%,var(--paper-2) 100%);
+    border-bottom:1px solid var(--line);
+  }
+@keyframes clipInk{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.ink-cover .inner{position:relative;z-index:3}
+.ink-cover .zh-side{position:absolute;left:18px;top:48%;z-index:3;writing-mode:vertical-rl;font-size:13px;letter-spacing:.4em;color:var(--sunset);opacity:.8}
+.ink-cover .kicker{font-family:var(--serif-en);font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--sunset)}
+.ink-cover h1{font-weight:600;font-size:clamp(52px,13vw,84px);letter-spacing:.14em;line-height:1.06;margin:12px 0 6px;color:var(--ink);text-shadow:0 2px 20px rgba(246,239,225,.8)}
+.ink-cover .en{font-family:var(--serif-en);font-size:15px;letter-spacing:.4em;color:var(--ink-soft);text-transform:uppercase}
+.ink-cover .rule{width:40px;height:1px;background:var(--sunset);opacity:.8;margin:22px auto}
+.ink-cover .dates{font-family:var(--serif-en);font-style:italic;font-size:16px;color:var(--ink)}
+.ink-cover .who{font-size:12.5px;letter-spacing:.14em;color:var(--ink-soft);margin-top:6px}
+.ink-cover .stamp{margin-top:14px;font-size:.72rem;opacity:.55;letter-spacing:.2em;color:var(--ink-soft)}
+.ink-cover .dot{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:3;width:24px;height:24px;background:var(--sunset);border-radius:50%;opacity:.9}
+.ink-cover .scrollcue{position:absolute;bottom:80px;left:0;right:0;z-index:3;font-size:11px;letter-spacing:.3em;color:var(--ink-soft);opacity:.6}
+.rise{opacity:0;transform:translateY(22px);animation:rise 1.2s var(--ease-ink) forwards}
+.rise.a{animation-delay:.6s}
+.rise.b{animation-delay:.9s}
+.rise.c{animation-delay:1.2s}
+.rise.d{animation-delay:1.6s}
+.rise.e{animation-delay:2s}
+@keyframes rise{to{opacity:1;transform:none}}
+.dot.rise{animation:rise 1.4s var(--ease-ink) 2.2s forwards}
+.float-slow{animation:floaty 6s ease-in-out infinite 2.6s}
+@keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-9px)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--t-med) var(--ease-ink),transform var(--t-med) var(--ease-ink)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.32s}
+.reveal.d4{transition-delay:.44s}
+@keyframes petalfall{
+    from{transform:translateY(-30px) translateX(0) rotate(0)}
+    to{transform:translateY(var(--fall)) translateX(var(--drift)) rotate(var(--spin))}}
+#chnav{
+    position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;
+    background:rgba(237,228,211,.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    transform:translateY(110%);transition:transform .7s var(--ease-ink);
+  }
+body.js-ch #chnav{display:block}
+#chnav.show{transform:none}
+#chnav .inner{display:flex;gap:6px;max-width:560px;margin:0 auto}
+#chnav button{
+    flex:1;appearance:none;background:transparent;border:1px solid transparent;border-radius:999px;
+    font-family:inherit;padding:8px 2px;font-size:.85rem;letter-spacing:.06em;color:var(--navy);cursor:pointer;
+    transition:background .4s var(--ease-ink),color .4s var(--ease-ink);
+  }
+#chnav button.active{background:var(--navy);color:#fff}
+body.js-ch .chapter{display:none}
+body.js-ch .chapter.on{display:block;animation:chIn .9s var(--ease-ink)}
+@keyframes chIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+body.js-ch{padding-bottom:74px}
+#ch-curtain{
+    position:fixed;inset:0;z-index:90;pointer-events:none;display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(60% 50% at 50% 42%,rgba(31,138,157,.10),transparent 70%),
+      linear-gradient(105deg,var(--paper-hi),var(--paper) 55%,var(--paper-2));
+    clip-path:inset(0 100% 0 0);
+  }
+#ch-curtain.cover{clip-path:inset(0 0 0 0);transition:clip-path .5s var(--ease-ink)}
+#ch-curtain.cover.uncover{clip-path:inset(0 0 0 100%);transition:clip-path .6s var(--ease-ink)}
+#ch-curtain .ct{font-size:30px;letter-spacing:.32em;color:var(--ink);opacity:.32;font-weight:600}
+@media print{#chnav,#ch-curtain{display:none!important}
+body.js-ch .chapter{display:block!important}}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.sec-title{display:flex;align-items:center;gap:12px;font-size:1.65rem;color:var(--navy);
+    letter-spacing:.06em;margin-bottom:6px;font-weight:700}
+.sec-title::before{content:"";width:6px;height:1.5rem;flex:0 0 6px;
+    background:linear-gradient(180deg,var(--copper),var(--gold));border-radius:3px}
+.sec-sub{color:var(--gold);font-size:.92rem;letter-spacing:.08em;margin-bottom:24px}
+.card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 20px 16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(38,52,58,.05);
+  }
+.card h3{color:var(--navy);font-size:1.12rem;letter-spacing:.04em;margin-bottom:4px}
+.card h3 .en{display:block;margin-top:3px;color:var(--gold);font-size:.8rem;letter-spacing:.08em}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{
+    font-size:.74rem;padding:2px 10px;border-radius:999px;letter-spacing:.05em;
+    background:var(--tip-bg);color:var(--navy);border:1px solid var(--line);
+  }
+.chip.grade-S{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip.grade-A{background:var(--gold-soft);color:var(--navy-deep);border-color:var(--gold)}
+.chip.grade-B{background:#eee;color:#555}
+.chip.warn{background:var(--warn-bg);color:var(--red);border-color:#e5c2b0}
+.card p.desc{font-size:.98rem;margin:6px 0 4px;line-height:1.9}
+.sec-title,.card h3{text-wrap:balance}
+details summary{font-weight:600}
+.kv{font-size:.88rem;margin:3px 0;color:#5a4c3c}
+.kv b{color:var(--navy)}
+.maps-btn{
+    display:inline-block;margin-top:10px;padding:7px 18px;border-radius:999px;text-decoration:none;
+    background:var(--navy);color:#fff;font-size:.84rem;letter-spacing:.08em;
+  }
+details{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+summary{cursor:pointer;color:var(--copper);font-size:.86rem;letter-spacing:.05em;list-style:none}
+summary::before{content:"▸ "}
+details[open] summary::before{content:"▾ "}
+details .inner-d{font-size:.88rem;padding:8px 2px;color:#5a4c3c}
+@media (max-width:600px){
+    .tl{margin-left:4px}
+    .tl li{padding:8px 0 8px 16px;min-height:0;border-left:2px solid rgba(31,138,157,.28)}
+    .tl li::before{
+      position:static;display:block;width:auto;text-align:left;
+      font-size:.8rem;font-weight:700;letter-spacing:.08em;
+    }
+    .tl li::after{left:-4px;top:17px;width:6px;height:6px;opacity:1}
+  }
+.tip{
+    background:var(--tip-bg);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+    padding:12px 16px;font-size:.9rem;margin:18px 0;color:#4a4335;
+  }
+.warn-box{
+    background:var(--warn-bg);border-left:3px solid var(--red);border-radius:0 10px 10px 0;
+    padding:12px 16px;font-size:.9rem;margin:18px 0;color:#6b3a2e;
+  }
+table{width:100%;border-collapse:collapse;font-size:.87rem;margin:12px 0}
+th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;letter-spacing:.04em;font-weight:600}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(230,219,199,.45)}
+.kv-hl{background:rgba(31,138,157,.08);border-left:3px solid var(--copper);padding:4px 10px;border-radius:0 8px 8px 0;font-weight:600;font-size:.95rem}
+.gallery{display:flex;gap:8px;overflow-x:auto;margin-top:12px;padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;border-radius:8px}
+.gallery img{height:150px;width:auto;border-radius:8px;flex:0 0 auto;scroll-snap-align:start;background:var(--tip-bg)}
+.gallery.lg img{height:180px}
+.gal-hint{font-size:.74rem;color:var(--ink-soft);opacity:.65;letter-spacing:.08em;text-align:center;margin-top:2px}
+footer{padding:40px 0 60px;text-align:center;font-size:.78rem;color:#999;letter-spacing:.15em}
+.footer-tag{margin-top:8px;letter-spacing:.4em;color:var(--gold);opacity:.55}
+
+  /* ── 本站追加：封面照片版 ── */
+  .ink-cover{min-height:92vh}
+  .ink-cover .hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.64;mix-blend-mode:multiply;filter:saturate(.85) contrast(.95)}
+  .ink-cover .inner{position:relative;z-index:2;text-align:center;padding:0 24px}
+  .ink-cover h1{font-size:clamp(2.4rem,9vw,3.6rem);line-height:1.25;color:var(--navy-deep);letter-spacing:.08em;margin:6px 0 10px}
+  .ink-cover .kicker{font-family:var(--serif-en);font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--ink-soft)}
+  .ink-cover .en{font-family:var(--serif-en);font-size:15px;letter-spacing:.3em;color:var(--ink-soft);text-transform:uppercase}
+  .ink-cover .rule{width:56px;height:1px;background:var(--copper);margin:18px auto}
+  .ink-cover .dates,.ink-cover .who{font-size:.95rem;color:#4a3f30;letter-spacing:.06em;line-height:1.9}
+  .ink-cover .scrollcue{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft);z-index:2}
+
+  /* ── 區域標頭 ── */
+  .area-head{margin:6px 0 18px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,rgba(31,138,157,.10),rgba(31,138,157,.02));border:1px solid rgba(31,138,157,.25)}
+  .area-head .drive{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:var(--copper);font-size:.95rem;letter-spacing:.04em}
+  .area-head p{font-size:.92rem;color:#4a4335;margin-top:6px;line-height:1.8}
+  .pick-group{margin:24px 0 10px;display:flex;align-items:center;gap:10px;color:var(--copper);font-size:.8rem;letter-spacing:.14em;font-weight:700}
+  .pick-group::after{content:"";flex:1;height:1px;background:var(--line)}
+  .pick-group small{font-weight:400;letter-spacing:.06em;color:#8a7d6b}
+
+  /* ── 餐廳卡：沿用主站 .card，再加愛心與「10 人怎麼訂」列 ── */
+  .card.pcard{position:relative;transition:border-color .4s var(--ease-ink),background .4s var(--ease-ink),box-shadow .4s var(--ease-ink);scroll-margin-top:14px}
+  .card.pcard.liked{border-color:var(--ocean);background:#fbf2e8;box-shadow:0 2px 12px rgba(207,122,90,.16)}
+  .pcard h3,.pcard .chips{padding-right:52px}
+  .pcard .hotel{font-size:.82rem;color:var(--copper);letter-spacing:.05em;margin:-2px 0 6px;padding-right:52px}
+  .pstat{font-size:.9rem;line-height:1.65;padding:7px 12px;border-radius:0 8px 8px 0;border-left:3px solid;margin:6px 0 10px}
+  .pstat.ok{background:rgba(92,138,90,.1);border-color:var(--grass);color:#3f6a3d}
+  .pstat.ask{background:var(--tip-bg);border-color:var(--gold);color:#6d5322}
+  .pstat.no{background:var(--warn-bg);border-color:var(--red);color:#8a3a2c}
+  .chip.meal{background:rgba(31,138,157,.1);color:var(--copper);border-color:rgba(31,138,157,.35);font-weight:700}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .btns .maps-btn{margin-top:6px}
+  .maps-btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+  .heart{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:#b9a892;
+    font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;z-index:2;
+    -webkit-tap-highlight-color:transparent;transition:transform .25s var(--ease-ink),color .25s,background .25s,border-color .25s}
+  .heart:active{transform:scale(.9)}
+  .heart[aria-pressed="true"]{color:#fff;background:var(--ocean);border-color:var(--ocean);animation:heartPop .45s var(--ease-ink)}
+  @keyframes heartPop{0%{transform:scale(.7)}55%{transform:scale(1.22)}100%{transform:scale(1)}}
+  .heart-lb{position:absolute;top:60px;right:14px;width:44px;text-align:center;font-size:.66rem;letter-spacing:.06em;color:#a89880;pointer-events:none}
+  .pcard.liked .heart-lb{color:var(--ocean);font-weight:700}
+  .gallery img{cursor:zoom-in}
+
+  /* ── 總覽：車程表與精選 ── */
+  .drive-list{list-style:none;margin:8px 0 4px}
+  .drive-list li{display:flex;align-items:baseline;gap:10px;padding:9px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+  .drive-list li b{color:var(--navy);flex:1}
+  .drive-list li .min{color:var(--copper);font-weight:700;white-space:nowrap;letter-spacing:.04em}
+  .drive-list li small{display:block;color:#8a7d6b;font-size:.78rem;letter-spacing:.03em}
+  .top-list{list-style:none;margin:6px 0}
+  .top-list li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:.95rem;line-height:1.7}
+  .top-list li a{color:var(--navy);font-weight:700;text-decoration:none;border-bottom:1px dotted var(--copper)}
+  .top-list li span{display:block;color:#5a4c3c;font-size:.86rem}
+  .cut-list{list-style:none;margin:6px 0}
+  .cut-list li{padding:8px 0;border-bottom:1px dashed var(--line);font-size:.9rem;color:#5a4c3c}
+  .cut-list li b{color:var(--navy)}
+
+  /* ── 想吃清單 ── */
+  .wish-box{background:var(--card);border:2px solid var(--ocean);border-radius:16px;padding:18px 18px 16px;margin-top:8px;box-shadow:0 2px 14px rgba(207,122,90,.14);scroll-margin-top:12px}
+  .wish-box h3{color:var(--navy);font-size:1.15rem;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+  .wish-box h3 .cnt{margin-left:auto;font-size:.8rem;color:var(--ocean);letter-spacing:.08em;font-weight:400}
+  .wish-list{list-style:none;margin:10px 0 4px}
+  .wish-list li{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+  .wish-list li .no{color:var(--ocean);font-weight:700;flex:0 0 1.6em}
+  .wish-list li .nm{flex:1;min-width:0}
+  .wish-list li .nm small{display:block;font-size:.76rem;color:#8a7d6b;letter-spacing:.04em}
+  .wish-list li .rm{appearance:none;border:none;background:transparent;color:#a89880;font-size:1.05rem;cursor:pointer;padding:4px 8px;font-family:inherit;flex:0 0 auto}
+  .wish-empty{color:#8a7d6b;font-size:.9rem;padding:10px 0}
+  .wish-note{width:100%;margin-top:12px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:.9rem;background:#fff;color:var(--ink);resize:vertical;min-height:50px;line-height:1.6}
+  .wish-actions{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+  .wish-btn{appearance:none;border:none;border-radius:999px;padding:12px 20px;font-family:inherit;font-size:.94rem;letter-spacing:.08em;cursor:pointer;transition:opacity .3s,transform .2s}
+  .wish-btn:active{transform:scale(.97)}
+  .wish-btn.primary{background:var(--ocean);color:#fff;flex:1;box-shadow:0 2px 8px rgba(207,122,90,.3);font-weight:700}
+  .wish-btn.primary:disabled{opacity:.4;box-shadow:none;cursor:default}
+  .wish-btn.ghost{background:transparent;border:1px solid var(--line);color:#6a5d4b}
+  .wish-hint{font-size:.76rem;color:#8a7d6b;letter-spacing:.04em;margin-top:10px;line-height:1.6}
+  .wish-toast{position:fixed;left:50%;bottom:calc(78px + env(safe-area-inset-bottom));transform:translate(-50%,10px);background:var(--navy-deep);color:#fff;
+    padding:10px 18px;border-radius:999px;font-size:.88rem;letter-spacing:.06em;opacity:0;pointer-events:none;transition:opacity .35s,transform .35s;z-index:80;white-space:nowrap;max-width:92vw}
+  .wish-toast.show{opacity:1;transform:translate(-50%,0)}
+  #wish-fab{position:fixed;left:50%;transform:translate(-50%,14px);bottom:calc(66px + env(safe-area-inset-bottom));z-index:69;
+    background:var(--ocean);color:#fff;border:none;border-radius:999px;padding:9px 18px;font-family:inherit;font-size:.88rem;letter-spacing:.06em;
+    box-shadow:0 4px 14px rgba(207,122,90,.35);opacity:0;pointer-events:none;transition:opacity .4s var(--ease-ink),transform .4s var(--ease-ink);cursor:pointer}
+  #wish-fab b{font-size:1rem}
+  #wish-fab.show{opacity:1;pointer-events:auto;transform:translate(-50%,0)}
+  #chnav button.pick-nav{color:var(--ocean);font-weight:700}
+  #chnav button.pick-nav.active{background:var(--ocean);color:#fff}
+  @media (max-width:600px){#chnav .inner{gap:3px} #chnav button{font-size:.78rem;letter-spacing:.01em;padding:8px 0}}
+
+  /* ── 照片放大（點圖放大、左右滑） ── */
+  #lb{position:fixed;inset:0;z-index:100;background:rgba(20,16,12,.94);display:none;align-items:center;justify-content:center;flex-direction:column}
+  #lb.on{display:flex}
+  #lb img{max-width:96vw;max-height:80vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.6);object-fit:contain;background:#000}
+  #lb .cap{color:#e8dcc5;font-size:.86rem;letter-spacing:.06em;margin-top:12px;text-align:center;padding:0 20px}
+  #lb .x{position:absolute;top:14px;right:16px;color:#fff;font-size:30px;line-height:1;background:transparent;border:none;cursor:pointer;padding:8px;font-family:inherit}
+  #lb .nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:34px;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-family:inherit}
+  #lb .prev{left:8px} #lb .next{right:8px}
+  @media print{#wish-fab,.wish-toast,#lb,.heart,.heart-lb{display:none!important}}
+</style>
+</head>
+<body>
+
+<section class="ink-cover" id="cover">
+  <img class="hero" src="img/hero.jpg" alt="伊良部大橋與宮古藍海空拍">
+  <div class="inner">
+    <div class="kicker rise a">Miyakojima · Hotel Dining</div>
+    <h1 class="rise b">宮古島<br>飯店高級餐廳</h1>
+    <div class="en rise b">Resort Restaurants Guide</div>
+    <div class="rule rise c"></div>
+    <div class="dates rise c">9/26（六）・9/27（日）午晚餐候選</div>
+    <div class="who rise d">21 間・附車程、價位、訂位方式與照片<br>想吃的點 ♡，清單一鍵複製給小煜</div>
+  </div>
+  <div class="scrollcue rise e">向下捲動 ⌄</div>
+</section>
+
+<div id="ch-curtain"><div class="ct"></div></div>
+
+<nav id="chnav" aria-label="章節切換">
+  <div class="inner">
+    <button type="button" data-ch="1" class="active">總覽</button>
+    <button type="button" data-ch="2">シギラ</button>
+    <button type="button" data-ch="3">平良・前浜</button>
+    <button type="button" data-ch="4">離島</button>
+    <button type="button" data-ch="5" class="pick-nav">♥ 清單</button>
+  </div>
+</nav>
+
+<div class="wrap">
+
+<div class="chapter" id="ch-1">
+  <section id="overview">
+    <div class="sec-title">先看這一頁</div>
+    <div class="sec-sub">21 間飯店餐廳・依區域分章・每間都有照片、價位與 10 人團訂位方式</div>
+    <div class="tip"><b>怎麼用</b>：底部切換區域，每間餐廳右上角的 ♡ 點一下就是「想吃」，最後到「♥ 清單」一鍵複製傳給小煜。照片點一下可以放大、左右滑。訂位狀況小煜之後再逐間確認，這份先讓你挑喜歡的。</div>
+
+    <div class="card">
+      <h3>離瑰麗多遠 <span class="en">Drive time from Rosewood</span></h3>
+      <ul class="drive-list" id="drive-list"></ul>
+      <div class="kv" style="margin-top:8px"><b>備註</b>：車程以瑰麗（北岸大浦）出發、白天不塞車估算，晚餐回程請飯店禮賓部先訂好車或用 DiDi。</div>
+    </div>
+
+    <div class="card">
+      <h3>10 人親子團最好排的六間 <span class="en">Top picks</span></h3>
+      <ul class="top-list" id="top-list"></ul>
+    </div>
+
+    <div class="card">
+      <h3>中午也能吃的高級店 <span class="en">Lunch options</span></h3>
+      <p class="desc">シギラ的高級餐廳幾乎都只做晚餐，午餐要靠這幾間。</p>
+      <ul class="top-list" id="lunch-list"></ul>
+    </div>
+
+    <div class="warn-box"><b>9/27 是週日，要注意</b>：リストランテ DEA 週日休；東急やえびし的壽司吧檯週日休（餐廳照常）。帶幼兒的話，蜃気楼鉄板焼與マラルンガ鉄板焼「小學生以下不可」、DEA「12 歲以下不可」，選鐵板燒請看 HORIZON 或シギラブルー。</div>
+    <div class="tip"><b>訂位通則</b>：多數店線上訂位上限只到 6–8 人，10 人幾乎都要打電話；套餐多要前一天預約，星河（只有 14 席）與 DEA 要更早。非住客都可以用，シギラ的訂位表單「住宿地」選「其他」填瑰麗即可。</div>
+
+    <div class="card">
+      <h3>看過但沒列進來的 <span class="en">Not included</span></h3>
+      <ul class="cut-list" id="cut-list"></ul>
+    </div>
+  </section>
+</div>
+
+<div class="chapter" id="ch-2"><section id="area-shigira"></section></div>
+<div class="chapter" id="ch-3"><section id="area-hirara"></section></div>
+<div class="chapter" id="ch-4"><section id="area-islands"></section></div>
+
+<div class="chapter" id="ch-pick">
+  <section id="pick">
+    <div class="sec-title">♥ 想吃清單</div>
+    <div class="sec-sub">在各區點過愛心的店會自動整理在這裡・一鍵複製貼到 LINE 給小煜</div>
+    <div class="wish-box" id="wish-box">
+      <h3>♥ 想吃清單 <span class="cnt" id="wish-count">還沒選</span></h3>
+      <div id="wish-body"><div class="wish-empty">還沒有選——到各區點餐廳右上角的 ♡ 就會加進來。</div></div>
+      <textarea class="wish-note" id="wish-note" rows="2" placeholder="想補充的話（選填）：例如「琥珀楼排 9/26 晚上」「想要包廂」"></textarea>
+      <div class="wish-actions">
+        <button type="button" class="wish-btn primary" id="wish-copy" disabled>一鍵複製清單</button>
+        <button type="button" class="wish-btn ghost" id="wish-clear">清空</button>
+      </div>
+      <div class="wish-hint">複製後打開 LINE 貼上傳給小煜即可・清單會存在這支手機，下次打開還在</div>
+      <pre id="wish-text" hidden></pre>
+    </div>
+  </section>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-tag">MIYAKOJIMA · HOTEL DINING</div>
+  <div style="font-size:.74rem;color:#8a7d6b;letter-spacing:.06em;margin-top:8px">資料查證日 2026-09-08・價格與營業時間以各店官網為準・照片取自各飯店官方網站</div>
+</footer>
+<button type="button" id="wish-fab">♥ 想吃 <b id="wish-fab-n">0</b> 間・看清單</button>
+<div class="wish-toast" id="wish-toast"></div>
+<div id="lb" role="dialog" aria-modal="true"><button class="x" aria-label="關閉">×</button><button class="nav prev" aria-label="上一張">‹</button><img alt=""><button class="nav next" aria-label="下一張">›</button><div class="cap"></div></div>
+
+<script>
+/* ═══ 資料層：內容都在這裡（查證日 2026-09-08，來源＝各飯店官網與官方 TableCheck） ═══ */
+window.D = {
+  photos: {"azure": [1, 2, 3, 4, 5, 6, 7, 8], "chiikii": [1, 2, 3, 4, 5, 6, 7], "dea": [1, 2, 3, 4, 5, 6, 7, 8], "horizon": [1, 2, 3, 4, 5, 6, 7, 8], "isoletta": [1, 2, 3, 4, 5, 6, 7, 8], "kissho": [1, 2, 3, 4, 5, 6, 7, 8], "kohakuro": [1, 2, 3, 4, 5, 6, 7, 8], "maralunga": [1, 2, 3, 4, 5, 6, 7, 8], "maralunga-teppan": [1, 2, 3, 4, 5, 6, 7], "olivea": [1, 2, 3, 4, 5, 6, 7, 8], "porto-cervo": [1, 2, 3, 4, 5, 6, 7, 8], "seiga": [1, 2, 3, 4, 5, 6, 7, 8], "shigira-blue": [1, 2, 3, 4, 5, 6, 7, 8], "shigira-turtle-bay": [1, 2, 3, 4, 5, 6, 7, 8], "shinkiro01": [1, 2, 3, 4, 5, 6, 7, 8], "shinkiro03": [1, 2, 3, 4, 5, 6, 7], "soufuu": [1, 2, 3, 4, 5, 6, 7, 8], "tensho": [1, 2, 3, 4, 5, 6, 7, 8], "tinin": [1, 2, 3, 4, 5, 6, 7, 8], "with-blue": [1, 2, 3, 4, 5, 6, 7, 8], "yaebishi": [1, 2, 3, 4, 5, 6, 7, 8]},
+  drives: [
+    ["平良トゥリバー（Hilton・Canopy）", "約 15 分", "跟 YARD 同一區，離瑰麗最近"],
+    ["伊良部島（Iraph Sui・Santorini）", "約 25–35 分", "過伊良部大橋；Santorini 近橋頭、Iraph Sui 在島另一側"],
+    ["前浜（東急）", "約 30–35 分", "与那覇前浜白沙灘旁"],
+    ["来間島（シーウッド）", "約 35 分", "與前浜同一條動線，過来間大橋"],
+    ["シギラ度假區（南岸）", "約 35 分", "德國村、溫泉同一區，可排同一天"]
+  ],
+  top: [
+    ["maralunga", "包廂 5 室、線上直接訂 25 人、有兒童御膳——整份名單最好排的高級店"],
+    ["shinkiro03", "全包廂涮涮鍋，小孩吵也不怕，線上直接訂"],
+    ["kohakuro", "今年 8 月新開的高級中菜，北京烤鴨與點心，線上可訂 42 人"],
+    ["horizon", "官網明寫歡迎帶小孩的海景鐵板燒，¥8,800 起"],
+    ["isoletta", "Hilton 柴窯披薩義式，離瑰麗只要 15 分"],
+    ["kissho", "銀座老舖會席，線上可訂 11 人、有個室，明寫歡迎非住客"]
+  ],
+  lunch: [
+    ["azure", "Hilton 自助餐 ¥4,500，6 歲以下免費，全年無休"],
+    ["tinin", "伊良部島法式 × 琉球，午間套餐 ¥8,855"],
+    ["olivea", "伊良部島地中海海鮮，午晚都開"],
+    ["porto-cervo", "シギラ唯一好排的午餐，窯烤披薩"],
+    ["kissho", "午餐御膳 ¥3,300 起，但只限特定日，要先電洽"]
+  ],
+  cut: [
+    ["炭火焼肉 琉宮苑（シギラ）", "主站「其他餐廳」已經有，這裡不重複"],
+    ["Hilton 泳池畔 BBQ", "¥12,000／人、10 月底前限定，屬休閒露天而非高級餐廳；想要的話很適合 10 人團"],
+    ["Watermark「HoKuLaNi」", "在伊良部島佐和田、偏休閒，週日可能被包場"],
+    ["ザ・リスケープ", "線上只收 4 人以下，非住客可否官網沒寫"],
+    ["ヴィラブリゾート", "官網明寫非住客只能午餐，晚餐限住客"],
+    ["ホテルアトールエメラルド", "平良港商務飯店等級，餐廳不算高級"],
+    ["シギラ的居酒屋、咖啡、自助餐", "蕎麦前 宮古、小肥羊、ポルトフィーノ等偏休閒，未列"]
+  ],
+  areas: [
+    { id: "area-shigira", ch: 2, title: "シギラ度假區", sub: "宮古島南岸・Shigira Seven Miles Resort・13 間", drive: "離瑰麗約 35 分",
+      intro: "一整片度假區裡有好幾家飯店和 20 多間餐廳。非住客都能訂（訂位表單的「住宿地」選「其他」填瑰麗）；高級餐廳幾乎都只做晚餐，可以跟南岸的德國村、溫泉排同一天。價格皆含稅與服務費。",
+      groups: [
+        { title: "ホテル シギラミラージュ 一帶", items: ["shinkiro03", "shinkiro01", "soufuu", "tensho", "kohakuro"] },
+        { title: "アラマンダ 兩館", items: ["maralunga", "maralunga-teppan", "with-blue", "dea"] },
+        { title: "シギラ海灘旁", items: ["horizon", "shigira-turtle-bay"] },
+        { title: "ブリーズベイマリーナ", items: ["shigira-blue", "porto-cervo"] }
+      ] },
+    { id: "area-hirara", ch: 3, title: "平良・前浜", sub: "Hilton・Canopy・東急・5 間", drive: "Hilton／Canopy 約 15 分・東急約 30–35 分",
+      intro: "Hilton 與今年新開的 Canopy 都在平良トゥリバー，跟 YARD 同一區，是離瑰麗最近的飯店餐廳。東急在与那覇前浜白沙灘旁，可以配前浜玩水那天。",
+      groups: [
+        { title: "ヒルトン沖縄宮古島リゾート（トゥリバー）", items: ["azure", "isoletta"] },
+        { title: "キャノピー by ヒルトン（トゥリバー・2026/4 新開）", items: ["chiikii"] },
+        { title: "宮古島東急ホテル＆リゾーツ（前浜）", items: ["yaebishi", "seiga"] }
+      ] },
+    { id: "area-islands", ch: 4, title: "伊良部島・来間島", sub: "Iraph Sui・Santorini・シーウッド・3 間", drive: "伊良部島約 25–35 分・来間島約 35 分",
+      intro: "都要過橋。伊良部大橋橋頭就在トゥリバー，Santorini 離橋近、Iraph Sui 在島的另一側；来間島跟前浜同一條路，過来間大橋就到。",
+      groups: [
+        { title: "イラフ SUI ラグジュアリーコレクション（伊良部島）", items: ["tinin"] },
+        { title: "サントリーニ ホテル＆ヴィラズ（伊良部島・2024/3 開幕）", items: ["olivea"] },
+        { title: "宮古島来間リゾート シーウッドホテル（来間島）", items: ["kissho"] }
+      ] }
+  ],
+  rest: {
+    "maralunga": { drive: "約 35 分（南岸シギラ）", name: "マラルンガ 和琉創作", en: "Maralunga Waryu-Sosaku", hotel: "シギラベイサイドスイート アラマンダ", cuisine: "和琉創作會席", meals: "晚餐", grade: "S",
+      desc: "沖繩食材配和食技法的創作會席，宴客與家族聚餐都合適。包廂多、有兒童御膳，是整個シギラ最適合 10 人親子團的高級店。",
+      price: "想 ¥11,000／饗 ¥16,500／尚 ¥26,000；兒童御膳 ¥4,200；期間限定 金アグー豚しゃぶしゃぶ ¥9,800（9/1–10/31）", hours: "晚餐 18:00–22:00（LO 20:30）", closed: "無（依季節可能變動）",
+      ten: "ok|線上可直接訂 10 人（上限 25）；包廂 5 室最多 40 人", booking: "TableCheck 線上（上限 25 人）或電話", tel: "0980-74-7100", web: "https://www.tablecheck.com/shops/maralunga/reserve",
+      seats: "大廳 52・包廂 5 室・露台 60", kids: "有兒童御膳；服裝 resort casual（短褲 NG）", visitor: "非住客可", mapsQ: "シギラベイサイドスイート アラマンダ 宮古島" },
+    "shinkiro03": { drive: "約 35 分（南岸シギラ）", name: "蜃気楼 しゃぶしゃぶ", en: "Shinkiro Japanese Hot Pot", hotel: "ホテル シギラミラージュ 1F", cuisine: "宮古牛・阿古豬涮涮鍋", meals: "晚餐", grade: "S",
+      desc: "Mirage 館內的涮涮鍋專門店，宮古和牛與阿古豬配島野菜。七間全是包廂，帶小孩最自在。",
+      price: "でいご ¥12,000／ハイビスカス ¥14,000／グラジオラス ¥16,000；期間限定 和彩美食 ¥8,800（當日 17:00 前預約）；加點宮古和牛 100g ¥7,150", hours: "晚餐 18:00–22:00（LO 20:30）", closed: "無",
+      ten: "ok|線上可直接訂 10 人（上限 25）；全包廂 7 室 44 席", booking: "TableCheck 線上（上限 25 人）或電話", tel: "0980-74-7400", web: "https://www.tablecheck.com/shops/shinkiro03/reserve",
+      seats: "全包廂 7 室 44 席", kids: "官網未列兒童餐與年齡限制，訂位時問一下", visitor: "非住客可", mapsQ: "ホテルシギラミラージュ 宮古島" },
+    "kohakuro": { drive: "約 35 分（南岸シギラ）", name: "中国料理 琥珀楼", en: "Kohakuro", hotel: "シギラ 丘上獨棟樓閣（2026/8/1 開幕）", cuisine: "高級中菜・北京烤鴨・點心", meals: "晚餐", grade: "S",
+      desc: "今年 8 月才開的中菜樓閣，北京烤鴨、魚翅茶碗蒸與香港點心師傅的手作點心。想吃熟悉的中菜又要有排場，就是這間。",
+      price: "水晶 ¥10,000／翡翠 ¥15,000（需事前預約）；兒童盤 ¥3,000", hours: "晚餐 18:00–22:00（最終入店 21:00）", closed: "無",
+      ten: "ok|線上可直接訂 10 人（上限 42）；1F 有包廂、2F 宴會廳 42 席", booking: "TableCheck 線上（上限 42 人）或電話", tel: "0980-79-6262", web: "https://www.tablecheck.com/shops/kohakuro-miyakojima/reserve",
+      seats: "1F 80 席（有包廂）・2F 宴會廳 42 席", kids: "有兒童菜單；店前沒有停車場，停 Mirage 再走過去", visitor: "非住客可", mapsQ: "中国料理 琥珀楼 宮古島" },
+    "horizon": { drive: "約 35 分（南岸シギラ）", name: "Teppanyaki HORIZON", en: "ホライズン", hotel: "ザ シギラ コーラルポイント 2F（シギラ海灘旁）", cuisine: "鐵板燒・親子友善", meals: "晚餐", grade: "A",
+      desc: "面海的休閒鐵板燒，官網直接寫「帶小孩也安心」。價位比蜃気楼親民一截，也有御好燒這種小孩會吃的單點。",
+      price: "鮑×和牛 ¥8,800／伊勢海老×和牛 ¥13,000／特選宮古牛 ¥18,000／HORIZON ¥25,000；兒童套餐 ¥3,800；御好燒單點 ¥1,600 起", hours: "17:30–22:00（LO 20:30）", closed: "不定休",
+      ten: "ask|線上只到 7 人，10 人要打電話；半包廂 6＋8 席剛好", booking: "TableCheck 線上（上限 7 人）；10 人請電話", tel: "0980-74-7021", web: "https://www.tablecheck.com/shops/horizon01/reserve",
+      seats: "吧檯 42・桌席 18・半包廂 14", kids: "官網明寫歡迎帶小孩；有兒童套餐。停車場收費，住客到櫃台領免費券", visitor: "非住客可", mapsQ: "Teppanyaki HORIZON 宮古島" },
+    "shinkiro01": { drive: "約 35 分（南岸シギラ）", name: "蜃気楼 鉄板焼", en: "Shinkiro Teppanyaki", hotel: "ホテル シギラミラージュ 1F", cuisine: "鐵板燒・宮古牛・活海鮮", meals: "晚餐", grade: "S",
+      desc: "度假區裡最高級的鐵板燒，稀有宮古牛與活海鮮在眼前料理。只適合大人場，小孩要另外安排。",
+      price: "黒毛和牛と海老づくし ¥18,000／琉木 ¥21,000／美ぎ島 ¥25,000／豊見親 ¥35,000；特選宮古牛サーロイン 100g ¥10,450", hours: "晚餐 18:00–22:00（LO 20:30）", closed: "無",
+      ten: "no|小學生以下不可入店；大人場線上可訂 10 人（上限 20）", booking: "TableCheck 線上（上限 20 人）或電話", tel: "0980-74-7400", web: "https://www.tablecheck.com/shops/shinkiro01/reserve",
+      seats: "吧檯 26 席・有包廂", kids: "⚠️ 小學生以下不可；服裝 resort casual", visitor: "非住客可", mapsQ: "ホテルシギラミラージュ 宮古島" },
+    "maralunga-teppan": { drive: "約 35 分（南岸シギラ）", name: "マラルンガ鉄板焼", en: "Maralunga Teppanyaki", hotel: "シギラベイサイドスイート アラマンダ", cuisine: "鐵板燒・宮古牛・活鮑魚", meals: "晚餐", grade: "S",
+      desc: "宮古牛配活鮑魚、伊勢龍蝦，酒單約 200 款。同樣是大人專屬。",
+      price: "星砂 ¥18,000／綾道 ¥21,000／花鳥風月 ¥25,000／琉美 ¥28,000／琉球王朝 ¥35,000（2 人起）；兒童特別套餐 ¥12,000", hours: "晚餐 18:00–22:00（LO 20:30）", closed: "無",
+      ten: "no|小學生以下不可入店；大人場線上可訂 10 人（上限 25）", booking: "TableCheck 線上（上限 25 人）或電話", tel: "0980-74-7100", web: "https://www.tablecheck.com/shops/maralunga-teppan/reserve",
+      seats: "吧檯 24 席", kids: "⚠️ 小學生以下不可", visitor: "非住客可", mapsQ: "シギラベイサイドスイート アラマンダ 宮古島" },
+    "with-blue": { drive: "約 35 分（南岸シギラ）", name: "with blue", en: "ウィズ ブルー", hotel: "アラマンダ スプレンディド 1F（2026/4/29 開幕）", cuisine: "地中海・新美式・單點", meals: "晚餐", grade: "A",
+      desc: "今年 4 月新開的 Allamanda Splendid 主餐廳，白色自然素材空間面泳池與海。單點制，一桌分著吃最輕鬆。",
+      price: "單點制；STAUB 鑄鐵鍋主菜 ¥5,200–6,000（阿古豬、久米島赤雞、仔羊）", hours: "晚餐 18:00–22:00", closed: "無",
+      ten: "ok|線上可直接訂 10 人（上限 12）；有包廂 3 室", booking: "TableCheck 線上（上限 12 人）或電話", tel: "0980-79-6100", web: "https://www.tablecheck.com/shops/splendid/reserve",
+      seats: "大廳 114・主廚吧檯 8・露台 22・包廂 3 室", kids: "兒童餐未查到；服裝 resort casual", visitor: "非住客可", mapsQ: "アラマンダ スプレンディド 宮古島" },
+    "dea": { drive: "約 35 分（南岸シギラ）", name: "リストランテ DEA", en: "Ristorante DEA", hotel: "シギラ（Splendid 一帶）", cuisine: "創意義式套餐", meals: "晚餐", grade: "S",
+      desc: "以「シギラ姫」傳說為題的創意義式套餐，是シギラ最精緻的一間。限制也最多：週日休、12 歲以下不能進。",
+      price: "INNOVAZIONE ¥16,500／COMMOZIONE ¥22,000", hours: "晚餐 17:00–22:00", closed: "⚠️ 週日休（9/27 不營業）",
+      ten: "no|12 歲以下不可、週日休：只能 9/26 大人場；線上只收 4 人，要電話", booking: "TableCheck 線上（上限 4 人）；5 人以上電話", tel: "0980-76-6301", web: "https://www.tablecheck.com/shops/ristorante-dea/reserve",
+      seats: "桌席 52", kids: "⚠️ 12 歲以下不可入店；短褲 NG", visitor: "非住客可", mapsQ: "リストランテ DEA 宮古島" },
+    "soufuu": { drive: "約 35 分（南岸シギラ）", name: "鮨 蒼風", en: "Sushi Soufuu", hotel: "シギラ 和食棟（Mirage 旁）", cuisine: "壽司", meals: "晚餐", grade: "A",
+      desc: "赤醋醋飯配宮古近海魚與全國旬魚的壽司店，包廂最多可以坐 10 人。",
+      price: "華 ¥11,000／蒼 ¥16,500／雅 ¥22,000；兒童套餐 ¥3,300", hours: "17:00–22:00", closed: "週三",
+      ten: "ask|線上只到 8 人，10 人要電話；有 4–10 人包廂", booking: "TableCheck 線上（上限 8 人）；10 人請電話", tel: "0980-74-7355", web: "https://www.tablecheck.com/shops/sushi-soufuu/reserve",
+      seats: "大廳 16・吧檯 11・包廂 4 室", kids: "有兒童菜單", visitor: "非住客可", mapsQ: "鮨 蒼風 宮古島" },
+    "tensho": { drive: "約 35 分（南岸シギラ）", name: "てんぷら 天翔 宮古島", en: "Tempura Tensho", hotel: "シギラ 和食棟（Mirage 旁）", cuisine: "天婦羅", meals: "晚餐", grade: "A",
+      desc: "料理長親選近海魚與島野菜的正統天婦羅，坐吧檯看著現炸。",
+      price: "翔 ¥8,800／美味衣 ¥11,000／天宝 ¥16,500；兒童套餐 ¥3,300；單點天丼 ¥1,500–2,200", hours: "17:00–22:00", closed: "週二",
+      ten: "ok|線上可直接訂 10 人（上限 20）；吧檯為主，10 人會分開坐", booking: "TableCheck 線上（上限 20 人）或電話", tel: "0980-74-7357", web: "https://www.tablecheck.com/shops/tempura-tensho/reserve",
+      seats: "吧檯 11・包廂吧檯 6・包廂 3 室（4–6 人）", kids: "有兒童套餐", visitor: "非住客可", mapsQ: "てんぷら 天翔 宮古島" },
+    "shigira-turtle-bay": { drive: "約 35 分（南岸シギラ）", name: "シギラタートルベイ", en: "Shigira Turtle Bay", hotel: "シギラ海灘旁（步行 1 分）", cuisine: "海鮮・地中海・海鮮飯", meals: "晚餐", grade: "A",
+      desc: "玻璃屋海景的海鮮餐廳，宮古海鮮做成西班牙海鮮飯與馬賽魚湯，分享套餐很適合一大桌。",
+      price: "オーシャンブーケ ¥13,000／インスピレーション ¥16,500／分享套餐 ブイヤベース・パエリア 各 ¥10,000／カジュアルパーティー ¥8,800；兒童 キッズプレート ¥3,850", hours: "晚餐 18:00–22:00（LO 20:30）", closed: "無",
+      ten: "ok|線上剛好可訂 10 人；包廂方案要電話", booking: "TableCheck 線上（上限 10 人）；包廂只接電話", tel: "0980-76-3322", web: "https://www.tablecheck.com/shops/shigira-turtle-bay/reserve",
+      seats: "大廳 82・露台 68", kids: "有兒童特別菜單", visitor: "非住客可", mapsQ: "シギラタートルベイ 宮古島" },
+    "shigira-blue": { drive: "約 35 分（南岸シギラ）", name: "鉄板焼 シギラブルー", en: "Shigira Blue", hotel: "ホテルブリーズベイマリーナ 泳池畔", cuisine: "鐵板燒・親民", meals: "晚餐", grade: "A",
+      desc: "シギラ鐵板燒裡價位最親民、對親子最寬鬆的一間，泳池畔看夕陽。",
+      price: "INN ¥8,000／PANA ¥10,000／PUSU ¥12,000／TINN ¥15,000；兒童漢堡排套餐 ¥3,800（小學生以下）", hours: "17:30–21:00（LO 20:30）", closed: "無",
+      ten: "ok|線上可直接訂 10 人（上限 12）", booking: "TableCheck 線上（上限 12 人）或電話", tel: "0980-76-3901", web: "https://www.tablecheck.com/shops/teppan-breeze-bay-marina/reserve",
+      seats: "37 席（吧檯 21・桌席 16）", kids: "官網寫「全家一起來」；有兒童套餐", visitor: "非住客可", mapsQ: "ホテルブリーズベイマリーナ 宮古島" },
+    "porto-cervo": { drive: "約 35 分（南岸シギラ）", name: "ポルトチェルヴォ", en: "Porto Cervo", hotel: "ホテルブリーズベイマリーナ", cuisine: "拿坡里窯烤披薩・義式", meals: "午餐・晚餐", grade: "B",
+      desc: "500 度窯烤的拿坡里披薩，是シギラ區少數有午餐的正餐店。去南岸玩那天的午餐首選。",
+      price: "披薩 ¥1,880–2,580、義大利麵與肉魚料理單點", hours: "午 11:30–14:30（LO 14:00）／晚 17:00–22:00（LO 21:30）", closed: "週三",
+      ten: "ask|10 人建議電話；線上上限未列", booking: "TableCheck 線上或電話", tel: "0980-74-7274", web: "https://www.tablecheck.com/shops/porto-cervo/reserve",
+      seats: "店內 58・露台 32", kids: "未查到", visitor: "非住客可", mapsQ: "ポルトチェルヴォ 宮古島" },
+
+    "azure": { drive: "約 15 分（平良トゥリバー，YARD 同區）", name: "アジュール", en: "Azure", hotel: "ヒルトン沖縄宮古島リゾート 1F", cuisine: "全日餐廳・自助餐", meals: "午餐・晚餐", grade: "A",
+      desc: "主廚現場料理的 live station 自助餐，午晚都開、全年無休。親子團要吃午餐，這裡最不用想。",
+      price: "午餐自助 大人 ¥4,500／6–12 歲 ¥2,250／6 歲以下免費；秋季晚餐自助 ¥6,900／6–12 歲 ¥3,450（9/7–12/7）", hours: "午 11:30–14:00（LO 13:00）／晚 17:30–21:00（LO 20:00）", closed: "全年無休",
+      ten: "ask|線上只到 8 人，10 人要電話；有 15–24 人包廂", booking: "TableCheck 線上（上限 8 人）；10 人請電話", tel: "0980-75-5500", web: "https://www.tablecheck.com/ja/shops/hiltonokinawa-miyakojima-azure/reserve",
+      seats: "161 席（含露台）・包廂 24 席", kids: "有兒童餐、高腳椅；禁泳裝拖鞋", visitor: "官網明寫歡迎非住客", mapsQ: "Hilton Okinawa Miyako Island Resort" },
+    "isoletta": { drive: "約 15 分（平良トゥリバー，YARD 同區）", name: "イゾレッタ", en: "Isoletta", hotel: "ヒルトン沖縄宮古島リゾート 2F", cuisine: "Trattoria 義式・柴窯披薩", meals: "晚餐", grade: "A",
+      desc: "店內柴窯現烤披薩的義式小館，宮古鮪魚 carpaccio 是招牌。正式套餐之外也有 ¥9,000 的輕鬆版。",
+      price: "義式套餐 ¥14,900；Casual Italian Set ¥9,000（9/7–12/7，17:30–20:30）；披薩單點", hours: "晚餐 17:30–22:00（LO 21:00）", closed: "無",
+      ten: "ask|線上只到 6 人，10 人要電話", booking: "TableCheck 線上（上限 6 人）；10 人請電話", tel: "0980-75-5500", web: "https://www.tablecheck.com/ja/shops/hiltonokinawa-miyakojima-isoletta/reserve",
+      seats: "74 席・露台 24", kids: "有兒童餐具與座椅；無年齡限制", visitor: "非住客可", mapsQ: "Hilton Okinawa Miyako Island Resort" },
+    "chiikii": { drive: "約 15 分（平良トゥリバー，YARD 隔壁）", name: "CHIIKII（ちぃーきぃー）", en: "Canopy Grill", hotel: "キャノピー by ヒルトン沖縄宮古島リゾート 1F（2026/4/1 開幕）", cuisine: "直火燒烤・宮古牛・阿古豬", meals: "晚餐", grade: "A",
+      desc: "今年 4 月新開的 Canopy 一樓直火燒烤，宮古牛、阿古豬與香草雞用明火烤。就在 YARD 隔壁，離瑰麗最近的新店。",
+      price: "單點制；和牛戰斧約 2.5kg（3–4 人份）¥43,000（第三方資訊，官網未列價）", hours: "晚餐 17:30–22:00（LO 21:00）", closed: "無休",
+      ten: "ask|7 人以上要電話；遲到 15 分可能被取消", booking: "TableCheck 線上；7 人以上請電總機", tel: "0980-75-3330", web: "https://www.tablecheck.com/ja/canopy-miyakojima-chiikii/reserve",
+      seats: "約 55 席", kids: "有兒童椅（數量有限）；無年齡限制", visitor: "TableCheck 對外開放", mapsQ: "Canopy by Hilton Okinawa Miyako Island Resort" },
+    "yaebishi": { drive: "約 30–35 分（与那覇前浜）", name: "やえびし", en: "Yaebishi", hotel: "宮古島東急ホテル＆リゾーツ（前浜）", cuisine: "和食會席・沖繩魚壽司", meals: "晚餐", grade: "A",
+      desc: "前浜東急的和風餐廳，釜炊米飯配グルクン等沖繩魚的握壽司與宮古牛。座位多，10 人不成問題。",
+      price: "宮古晚餐「かぎすま」約 ¥9,000／壽司會席約 ¥9,000／¥12,000 方案", hours: "晚餐 17:30–22:00（LO 21:00；會席 LO 20:00）", closed: "壽司吧檯週日、週三休（餐廳本體照常）",
+      ten: "ask|9 人以上要電話；非住客有些日子不能用，要先問", booking: "TableCheck 線上（9 人以上請電話，受理 10:00–20:00）", tel: "0980-76-2109", web: "https://www.tablecheck.com/ja/shops/tokyuhotels-miyakojima-h-yaebishi/reserve",
+      seats: "110 席", kids: "未查到限制", visitor: "⚠️ 官網寫非住客部分日期無法使用，請先電洽", mapsQ: "宮古島東急ホテル＆リゾーツ" },
+    "seiga": { drive: "約 30–35 分（与那覇前浜）", name: "TEPPAN-YAKI 星河 -seiga-", en: "Seiga Teppanyaki", hotel: "宮古島東急ホテル＆リゾーツ（前浜）", cuisine: "鐵板燒・星空主題", meals: "晚餐", grade: "S",
+      desc: "2024 年新開的星空主題鐵板燒，伊勢龍蝦配沖繩本部牛。座位極少，10 人幾乎就是包場。",
+      price: "天の川 ¥26,000／南十字星 ¥23,000／ベガ ¥19,500；兒童套餐「小宇宙」¥8,000（含 13% 服務費與稅）", hours: "17:30–22:00 兩輪制（17:30／18:00 與 19:30／20:00）；只有套餐，前一日前預約", closed: "年中無休",
+      ten: "ask|只有 14 席，10 人等於包場，務必電話；取消費前日 50%、當日 100%", booking: "TableCheck 線上（7 人以上請電話）", tel: "0980-76-2109", web: "https://www.tablecheck.com/ja/shops/tokyuhotels-miyakojima-h-teppanyaki/reserve",
+      seats: "⚠️ 僅 14 席", kids: "有兒童套餐；未見年齡限制", visitor: "非住客可（新聞稿明寫）", mapsQ: "宮古島東急ホテル＆リゾーツ" },
+
+    "tinin": { drive: "約 30–35 分（過伊良部大橋到島的另一側）", name: "TIN'IN（てぃんいん）", en: "French × Ryukyu", hotel: "イラフ SUI ラグジュアリーコレクションホテル 沖縄宮古（伊良部島）", cuisine: "法式 × 琉球", meals: "午餐・晚餐", grade: "S",
+      desc: "三面落地窗看「伊良部藍」的法式餐廳，用琉球食材與技法。島上少數中午也能吃到高級套餐的地方。",
+      price: "午間套餐 ¥8,855／義大利麵午餐 ¥4,807；晚餐 TINGALA ¥15,180／KAGISUMA ¥18,975／TINPAU ¥25,300（含稅＋15% 服務費）", hours: "午 11:30–15:30／晚 17:30–21:00", closed: "未查到（Marriott 標每日營業）",
+      ten: "ask|線上每筆只到 6 人，10 人要電話；當日取消 100%", booking: "TableCheck 線上（上限 6 人）；7 人以上請電話", tel: "0980-74-5511", web: "https://www.tablecheck.com/ja/shops/iraphsui-miyako-tinin/reserve",
+      seats: "84 席（室內 64・露台 20）", kids: "午餐有兒童菜單；無年齡禁令", visitor: "Marriott 官網明寫非住客可；餐廳客停車免費", mapsQ: "Iraph Sui a Luxury Collection Hotel Miyako Okinawa" },
+    "olivea": { drive: "約 25–30 分（過伊良部大橋，離橋頭近）", name: "The Olivea（ザ オリビア）", en: "Mediterranean Seafood & Grill", hotel: "サントリーニ ホテル＆ヴィラズ 宮古島（伊良部島）", cuisine: "地中海・海鮮炭烤・窯烤披薩", meals: "午餐・晚餐", grade: "A",
+      desc: "白色希臘風飯店裡的地中海餐廳，主廚渡邉明做海鮮炭烤與窯烤披薩。午餐也開，離伊良部大橋近。",
+      price: "午餐套餐；島民限定套餐 ¥10,000；晚餐價格官網只放 PDF 菜單，未列", hours: "午 11:30–14:00／晚 17:30–21:00（餐點 LO 19:30）", closed: "未查到",
+      ten: "ask|需事前預約，10 人請電話", booking: "電話預約（櫃檯）", tel: "0980-79-6541", web: "https://olivea-miyakojima.com/",
+      seats: "17 桌 55 席", kids: "有兒童菜單", visitor: "非住客可（樂天頁明寫）", mapsQ: "サントリーニ ホテル＆ヴィラズ 宮古島" },
+    "kissho": { drive: "約 35 分（過来間大橋）", name: "日本料理 吉祥 来間島店", en: "Japanese Dining Kissho", hotel: "宮古島来間リゾート シーウッドホテル（来間島）", cuisine: "會席・壽司・和牛涮鍋", meals: "晚餐（午餐限特定日）", grade: "S",
+      desc: "東京銀座老舖「吉祥」首次出沖繩的分店，海景會席與和牛涮鍋。線上就能訂到 11 人，還有個室。",
+      price: "會席 ¥10,000／¥13,000／¥15,000、壽司會席 ¥10,000、和牛涮涮鍋・壽喜燒會席 ¥12,000（未稅）；午餐御膳 ¥3,300–5,800", hours: "晚餐 18:00–22:00（LO 21:30）；午餐只限特定日，要電洽", closed: "無休",
+      ten: "ok|線上可直接訂 10 人（上限 11）；個室 3 間（4／6／7 人以上）", booking: "TableCheck 線上（11 人以下）或電話；前一日前預約", tel: "0980-74-7888", web: "https://www.tablecheck.com/ja/shops/seawoodhotel-kissho/reserve",
+      seats: "82 席・個室 3 間", kids: "未查到限制", visitor: "官網明寫歡迎非住客", mapsQ: "宮古島来間リゾート シーウッドホテル" }
+  }
+};
+</script>
+<script>
+(function(){
+  var D=window.D, R=D.rest;
+  var $=function(id){ return document.getElementById(id); };
+  var esc=function(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
+  var maps=function(q){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q); };
+  var KEY="miyako_hotel_wish_v1";
+  var STAT={ok:"✅ 10 人好訂",ask:"📞 10 人要電話",no:"⚠️ 有限制"};
+  var areaOf={}; D.areas.forEach(function(a){ a.groups.forEach(function(g){ g.items.forEach(function(pk){ areaOf[pk]=a; }); }); });
+  var order=[]; D.areas.forEach(function(a){ a.groups.forEach(function(g){ order=order.concat(g.items); }); });
+
+  /* 勾選狀態 */
+  var state={liked:[],note:""};
+  try{ var raw=localStorage.getItem(KEY); if(raw){ var j=JSON.parse(raw); if(j&&Array.isArray(j.liked)) state.liked=j.liked.filter(function(k){ return R[k]; }); if(j&&typeof j.note==="string") state.note=j.note; } }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
+  function isLiked(pk){ return state.liked.indexOf(pk)>=0; }
+
+  /* 餐廳卡 */
+  function card(pk){
+    var r=R[pk], ph=(D.photos[pk]||[]), st=(r.ten||"ask|").split("|");
+    var gal=ph.length?'<div class="gallery">'+ph.map(function(n,i){ return '<img src="img/'+pk+'/t'+n+'.jpg" data-full="img/'+pk+'/'+n+'.jpg" data-pk="'+pk+'" data-i="'+i+'" alt="'+esc(r.name)+' 照片 '+(i+1)+'" loading="lazy">'; }).join("")+'</div><div class="gal-hint">◂ 左右滑動看更多（'+ph.length+' 張）・點圖放大 ▸</div>':"";
+    var detail='<div><b>訂位</b>：'+esc(r.booking)+(r.tel?'　<a href="tel:'+esc(r.tel.replace(/-/g,""))+'">'+esc(r.tel)+'</a>':'')+'</div>'+
+      '<div><b>非住客</b>：'+esc(r.visitor)+'</div>'+
+      '<div><b>座位</b>：'+esc(r.seats)+'</div>'+
+      '<div><b>兒童・服裝</b>：'+esc(r.kids)+'</div>';
+    return '<div class="card pcard'+(isLiked(pk)?' liked':'')+'" id="r-'+pk+'" data-pk="'+pk+'">'+
+      '<button type="button" class="heart" data-pk="'+pk+'" aria-pressed="'+(isLiked(pk)?'true':'false')+'" aria-label="想吃 '+esc(r.name)+'">'+(isLiked(pk)?'♥':'♡')+'</button><span class="heart-lb">想吃</span>'+
+      '<h3>'+esc(r.name)+' <span class="en">'+esc(r.en||"")+'</span></h3>'+
+      '<div class="hotel">'+esc(r.hotel)+'</div>'+
+      '<div class="chips"><span class="chip grade-'+esc(r.grade)+'">推薦 '+esc(r.grade)+'</span><span class="chip meal">'+esc(r.meals)+'</span><span class="chip">'+esc(r.cuisine)+'</span></div>'+
+      '<div class="pstat '+esc(st[0])+'"><b>'+esc(STAT[st[0]]||"")+'</b>　'+esc(st[1]||"")+'</div>'+
+      '<p class="desc">'+esc(r.desc)+'</p>'+
+      '<div class="kv"><b>離瑰麗車程</b>：'+esc(r.drive)+'</div>'+
+      '<div class="kv"><b>價位</b>：'+esc(r.price)+'</div>'+
+      '<div class="kv"><b>營業時間</b>：'+esc(r.hours)+'</div>'+
+      '<div class="kv"><b>定休</b>：'+esc(r.closed)+'</div>'+
+      gal+
+      '<details><summary>訂位・非住客・座位・兒童</summary><div class="inner-d">'+detail+'</div></details>'+
+      '<div class="btns">'+(r.web?'<a class="maps-btn" target="_blank" rel="noopener" href="'+esc(r.web)+'">'+(/tablecheck/.test(r.web)?'線上訂位':'官網')+'</a>':'')+
+      '<a class="maps-btn ghost" target="_blank" rel="noopener" href="'+maps(r.mapsQ)+'">地圖</a></div>'+
+    '</div>';
+  }
+  D.areas.forEach(function(a){
+    $(a.id).innerHTML='<div class="sec-title">'+esc(a.title)+'</div><div class="sec-sub">'+esc(a.sub)+'</div>'+
+      '<div class="area-head"><span class="drive">🚗 '+esc(a.drive)+'</span><p>'+esc(a.intro)+'</p></div>'+
+      a.groups.map(function(g){ return '<div class="pick-group">'+esc(g.title)+' <small>'+g.items.length+' 間</small></div>'+g.items.map(card).join(""); }).join("");
+  });
+
+  /* 總覽 */
+  $("drive-list").innerHTML=D.drives.map(function(d){ return '<li><b>'+esc(d[0])+'<small>'+esc(d[2])+'</small></b><span class="min">'+esc(d[1])+'</span></li>'; }).join("");
+  function topItem(t){ var r=R[t[0]]; return '<li><a href="#" data-go="'+t[0]+'">'+esc(r.name)+'</a>　<span class="chip meal" style="font-size:.7rem">'+esc(r.meals)+'</span><span>'+esc(t[1])+'</span></li>'; }
+  $("top-list").innerHTML=D.top.map(topItem).join("");
+  $("lunch-list").innerHTML=D.lunch.map(topItem).join("");
+  $("cut-list").innerHTML=D.cut.map(function(c){ return '<li><b>'+esc(c[0])+'</b>：'+esc(c[1])+'</li>'; }).join("");
+
+  /* ── 分章切換（沿用主站引擎） ── */
+  var QA=/[?&]qa=1/.test(location.search), chm=/[?&]ch=(\d)/.exec(location.search);
+  document.body.classList.add('js-ch');
+  var wrap=document.querySelector('.wrap'), chapters=[].slice.call(document.querySelectorAll('.chapter'));
+  var dock=$('chnav'), dockBtns=[].slice.call(dock.querySelectorAll('button')), curtain=$('ch-curtain');
+  var CH_TITLE={1:'總覽',2:'シギラ',3:'平良・前浜',4:'離島',5:'想吃清單'};
+  var cur=0, busy=false;
+  function setCh(n){ cur=n; chapters.forEach(function(c,i){ c.classList.toggle('on', i===n-1); }); dockBtns.forEach(function(b){ b.classList.toggle('active', +b.dataset.ch===n); }); }
+  function jumpTop(targetId){
+    var el=targetId&&document.getElementById(targetId);
+    var y=el?el.getBoundingClientRect().top+window.scrollY-12:wrap.offsetTop-6;
+    var root=document.documentElement, old=root.style.scrollBehavior; root.style.scrollBehavior='auto'; window.scrollTo(0,y); root.style.scrollBehavior=old;
+  }
+  function switchCh(n,targetId){
+    if(busy) return;
+    if(n===cur){ jumpTop(targetId); return; }
+    if(QA||matchMedia('(prefers-reduced-motion: reduce)').matches){ setCh(n); jumpTop(targetId); return; }
+    busy=true; curtain.querySelector('.ct').textContent=CH_TITLE[n]; curtain.classList.add('cover');
+    setTimeout(function(){ setCh(n); jumpTop(targetId); curtain.classList.add('uncover'); setTimeout(function(){ curtain.classList.remove('cover','uncover'); busy=false; },650); },520);
+  }
+  dockBtns.forEach(function(b){ b.addEventListener('click',function(){ switchCh(+b.dataset.ch); }); });
+  var dockIO=new IntersectionObserver(function(es){ es.forEach(function(e){ dock.classList.toggle('show', e.isIntersecting); }); },{rootMargin:'0px 0px -40% 0px'});
+  dockIO.observe(wrap);
+  function goRest(pk){ var a=areaOf[pk]; if(a) switchCh(a.ch,'r-'+pk); }
+  document.addEventListener('click',function(ev){ var a=ev.target.closest('a[data-go]'); if(a){ ev.preventDefault(); goRest(a.dataset.go); } });
+
+  var startCh=chm?+chm[1]:1, h=location.hash.replace('#','');
+  if(h==='pick') startCh=5; else if(h.indexOf('r-')===0 && R[h.slice(2)]) startCh=areaOf[h.slice(2)].ch;
+  setCh(Math.min(Math.max(startCh,1),chapters.length));
+  if(h) jumpTop(h);
+  if(QA){ dockIO.disconnect(); dock.classList.toggle('show', !!chm);
+    document.querySelectorAll('.rise').forEach(function(e){ e.style.animation='none'; e.style.opacity='1'; e.style.transform='none'; });
+    var st=document.createElement('style'); st.textContent='*,*::before,*::after{transition:none!important;animation:none!important}'; document.head.appendChild(st); }
+
+  /* ── 想吃清單 ── */
+  var box=$("wish-box"), body=$("wish-body"), cnt=$("wish-count"), copyBtn=$("wish-copy"), clearBtn=$("wish-clear"),
+      noteEl=$("wish-note"), textEl=$("wish-text"), fab=$("wish-fab"), fabN=$("wish-fab-n"), toast=$("wish-toast");
+  noteEl.value=state.note;
+  function buildText(){
+    var picked=order.filter(isLiked), lines=["【宮古島 飯店餐廳想吃清單】9/26（六）・9/27（日）午晚餐"];
+    picked.forEach(function(pk,i){ var r=R[pk]; lines.push((i+1)+". "+r.name+"（"+areaOf[pk].title+"・"+r.meals+"）"); });
+    lines.push("共 "+picked.length+" 間");
+    var n=(noteEl.value||"").trim(); if(n) lines.push("備註："+n);
+    return lines.join("\n");
+  }
+  function render(){
+    var picked=order.filter(isLiked);
+    cnt.textContent=picked.length?("已選 "+picked.length+" 間"):"還沒選";
+    body.innerHTML=picked.length?'<ul class="wish-list">'+picked.map(function(pk,i){ var r=R[pk];
+        return '<li><span class="no">'+(i+1)+'.</span><span class="nm"><a href="#" data-go="'+pk+'" style="color:inherit;text-decoration:none">'+esc(r.name)+'</a><small>'+esc(areaOf[pk].title)+'・'+esc(r.meals)+'・'+esc(r.hotel)+'</small></span><button type="button" class="rm" data-pk="'+pk+'" aria-label="移除 '+esc(r.name)+'">✕</button></li>';
+      }).join("")+'</ul>':'<div class="wish-empty">還沒有選——到各區點餐廳右上角的 ♡ 就會加進來。</div>';
+    copyBtn.disabled=!picked.length; textEl.textContent=buildText(); fabN.textContent=picked.length; updateFab();
+    document.querySelectorAll(".pcard").forEach(function(c){ var on=isLiked(c.dataset.pk); c.classList.toggle("liked",on); var hb=c.querySelector(".heart"); hb.setAttribute("aria-pressed",on?"true":"false"); hb.textContent=on?"♥":"♡"; });
+  }
+  function toggle(pk){ var i=state.liked.indexOf(pk); if(i>=0) state.liked.splice(i,1); else state.liked.push(pk); save(); render(); }
+  function showToast(msg){ toast.textContent=msg; toast.classList.add("show"); clearTimeout(showToast.t); showToast.t=setTimeout(function(){ toast.classList.remove("show"); },2200); }
+  function copyText(txt,cb){
+    function fallback(){ var ta=document.createElement("textarea"); ta.value=txt; ta.setAttribute("readonly",""); ta.style.position="fixed"; ta.style.top="0"; ta.style.opacity="0"; document.body.appendChild(ta); ta.focus(); ta.select(); ta.setSelectionRange(0,txt.length); var ok=false; try{ ok=document.execCommand("copy"); }catch(e){} document.body.removeChild(ta); cb(ok); }
+    if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(txt).then(function(){ cb(true); },fallback); } else fallback();
+  }
+  document.addEventListener("click",function(ev){ var hb=ev.target.closest(".heart"); if(hb) toggle(hb.dataset.pk); var rm=ev.target.closest(".rm"); if(rm) toggle(rm.dataset.pk); });
+  noteEl.addEventListener("input",function(){ state.note=noteEl.value; save(); textEl.textContent=buildText(); });
+  copyBtn.addEventListener("click",function(){ copyText(buildText(),function(ok){ if(ok) showToast("已複製 ✓ 打開 LINE 貼上傳給小煜"); else { textEl.hidden=false; showToast("請長按下方文字手動複製"); } }); });
+  clearBtn.addEventListener("click",function(){ if(!state.liked.length&&!noteEl.value) return; state.liked=[]; state.note=""; noteEl.value=""; textEl.hidden=true; save(); render(); showToast("已清空"); });
+  fab.addEventListener("click",function(){ switchCh(5,'pick'); });
+  var boxSeen=false;
+  function updateFab(){ fab.classList.toggle("show", cur!==5 && state.liked.length>0 && dock.classList.contains('show')); }
+  new MutationObserver(updateFab).observe(dock,{attributes:true,attributeFilter:["class"]});
+  dockBtns.forEach(function(b){ b.addEventListener('click',function(){ setTimeout(updateFab,600); }); });
+  render();
+
+  /* ── 照片放大 ── */
+  var lb=$("lb"), lbImg=lb.querySelector("img"), lbCap=lb.querySelector(".cap"), curPk=null, curI=0;
+  function showLb(pk,i){ var ph=D.photos[pk]||[]; if(!ph.length) return; curPk=pk; curI=(i+ph.length)%ph.length; lbImg.src="img/"+pk+"/"+ph[curI]+".jpg"; lbCap.textContent=R[pk].name+"　"+(curI+1)+" / "+ph.length; lb.classList.add("on"); document.body.style.overflow="hidden"; }
+  function hideLb(){ lb.classList.remove("on"); document.body.style.overflow=""; }
+  document.addEventListener("click",function(ev){ var im=ev.target.closest(".gallery img[data-full]"); if(im) showLb(im.dataset.pk,+im.dataset.i); });
+  lb.querySelector(".x").addEventListener("click",hideLb);
+  lb.querySelector(".prev").addEventListener("click",function(ev){ ev.stopPropagation(); showLb(curPk,curI-1); });
+  lb.querySelector(".next").addEventListener("click",function(ev){ ev.stopPropagation(); showLb(curPk,curI+1); });
+  lb.addEventListener("click",function(ev){ if(ev.target===lb||ev.target===lbCap) hideLb(); });
+  document.addEventListener("keydown",function(ev){ if(!lb.classList.contains("on")) return; if(ev.key==="Escape") hideLb(); if(ev.key==="ArrowLeft") showLb(curPk,curI-1); if(ev.key==="ArrowRight") showLb(curPk,curI+1); });
+  var tx=null; lb.addEventListener("touchstart",function(e){ tx=e.touches[0].clientX; },{passive:true});
+  lb.addEventListener("touchend",function(e){ if(tx==null) return; var dx=e.changedTouches[0].clientX-tx; tx=null; if(Math.abs(dx)>50) showLb(curPk,curI+(dx<0?1:-1)); },{passive:true});
+
+  /* 進場浮現 */
+  var io=new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } }); },{threshold:.18});
+  document.querySelectorAll('.reveal').forEach(function(e){ io.observe(e); });
+})();
+</script>
+</body>
+</html>

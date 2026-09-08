@@ -319,7 +319,7 @@
   footer{padding:40px 0 60px;text-align:center;font-size:.78rem;color:#999;letter-spacing:.15em}
   .footer-tag{margin-top:8px;letter-spacing:.4em;color:var(--gold);opacity:.55}
 
-  /* ── 選餐廳（老闆勾選：愛心＋想吃清單一鍵複製） ── */
+  /* ── 選餐廳（老闆勾選：原餐廳卡＋愛心＋訂位狀況；想吃清單一鍵複製） ── */
   #chnav button .ls{display:none}
   #chnav button.pick-nav{color:var(--ocean);font-weight:700}
   #chnav button.pick-nav.active{background:var(--ocean);color:#fff}
@@ -331,32 +331,22 @@
   }
   .pick-group{margin:22px 0 10px;display:flex;align-items:center;gap:10px;color:var(--copper);font-size:.8rem;letter-spacing:.14em;font-weight:700}
   .pick-group::after{content:"";flex:1;height:1px;background:var(--line)}
-  .pcard{position:relative;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 14px 12px;margin-bottom:12px;
-    box-shadow:0 1px 4px rgba(38,52,58,.05);transition:border-color .4s var(--ease-ink),background .4s var(--ease-ink),box-shadow .4s var(--ease-ink)}
-  .pcard.liked{border-color:var(--ocean);background:#fbf2e8;box-shadow:0 2px 12px rgba(207,122,90,.16)}
-  .pcard-main{display:flex;gap:12px;align-items:flex-start}
-  .pthumb{width:84px;height:84px;flex:0 0 84px;border-radius:10px;object-fit:cover;background:var(--tip-bg)}
-  .pcard-txt{flex:1;min-width:0}
-  .pcard h3{color:var(--navy);font-size:1.05rem;letter-spacing:.03em;margin-bottom:2px;line-height:1.4;text-wrap:balance;padding-right:44px}
-  .pcard .chips{padding-right:44px}
-  .pcard h3 .en{display:block;margin-top:2px;color:var(--gold);font-size:.76rem;letter-spacing:.08em}
-  .pcard .chips{margin:6px 0}
-  .chip.meal{background:rgba(31,138,157,.1);color:var(--copper);border-color:rgba(31,138,157,.35);font-weight:700}
-  .pstat{font-size:.88rem;line-height:1.65;padding:6px 10px;border-radius:0 8px 8px 0;border-left:3px solid;margin:8px 0 6px}
+  .card.pcard{position:relative;transition:border-color .4s var(--ease-ink),background .4s var(--ease-ink),box-shadow .4s var(--ease-ink)}
+  .card.pcard.liked{border-color:var(--ocean);background:#fbf2e8;box-shadow:0 2px 12px rgba(207,122,90,.16)}
+  .pcard h3,.pcard .chips{padding-right:48px}
+  .pstat{font-size:.9rem;line-height:1.65;padding:7px 12px;border-radius:0 8px 8px 0;border-left:3px solid;margin:4px 0 10px}
   .pstat.ok{background:rgba(92,138,90,.1);border-color:var(--grass);color:#3f6a3d}
   .pstat.web{background:rgba(31,138,157,.09);border-color:var(--copper);color:#1a6d7c}
   .pstat.ask{background:var(--tip-bg);border-color:var(--gold);color:#6d5322}
   .pstat.no{background:var(--warn-bg);border-color:var(--red);color:#8a3a2c}
   .pstat.none{background:#f0ebe0;border-color:#bfb3a0;color:#6a6255}
-  .pnote{font-size:.82rem;color:#5a4c3c;margin:2px 0 6px;line-height:1.7}
-  .plink{font-size:.8rem;color:var(--copper);text-decoration:none;letter-spacing:.06em;border-bottom:1px dotted currentColor;cursor:pointer}
-  .heart{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:#b9a892;
-    font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;
+  .heart{position:absolute;top:14px;right:14px;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;color:#b9a892;
+    font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit;z-index:2;
     -webkit-tap-highlight-color:transparent;transition:transform .25s var(--ease-ink),color .25s,background .25s,border-color .25s}
   .heart:active{transform:scale(.9)}
   .heart[aria-pressed="true"]{color:#fff;background:var(--ocean);border-color:var(--ocean);animation:heartPop .45s var(--ease-ink)}
   @keyframes heartPop{0%{transform:scale(.7)}55%{transform:scale(1.22)}100%{transform:scale(1)}}
-  .heart-lb{position:absolute;top:56px;right:10px;width:44px;text-align:center;font-size:.66rem;letter-spacing:.06em;color:#a89880;pointer-events:none}
+  .heart-lb{position:absolute;top:60px;right:14px;width:44px;text-align:center;font-size:.66rem;letter-spacing:.06em;color:#a89880;pointer-events:none}
   .pcard.liked .heart-lb{color:var(--ocean);font-weight:700}
   .wish-box{background:var(--card);border:2px solid var(--ocean);border-radius:16px;padding:18px 18px 16px;margin-top:28px;box-shadow:0 2px 14px rgba(207,122,90,.14);scroll-margin-top:12px}
   .wish-box h3{color:var(--navy);font-size:1.15rem;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
@@ -520,7 +510,7 @@
   <section id="pick">
     <div class="sec-title">選餐廳・想吃就點愛心</div>
     <div class="sec-sub">9/26（六）・9/27（日）中餐與晚餐・各店訂位狀況已先問過・選好一鍵複製給小煜</div>
-    <div class="tip"><b>怎麼用</b>：每間餐廳右上角的 ♡ 點一下變 ♥ 就是「想吃」。下面的「想吃清單」會自動整理，按「一鍵複製清單」再貼到 LINE 給小煜就好，小煜會依訂位狀況幫忙排進 9/26、9/27 的午晚餐。想看店家照片與完整介紹，點卡片裡的「完整介紹」。</div>
+    <div class="tip"><b>怎麼用</b>：每間餐廳右上角的 ♡ 點一下變 ♥ 就是「想吃」。下面的「想吃清單」會自動整理，按「一鍵複製清單」再貼到 LINE 給小煜就好，小煜會依訂位狀況幫忙排進 9/26、9/27 的午晚餐。</div>
     <div id="pick-list"></div>
 
     <div class="wish-box" id="wish-box">
@@ -714,37 +704,26 @@ window.tripData = {
   ],
 
 
-  /* 選餐廳（老闆勾選用）：avail＝2026-09-08 小煜實際詢問的訂位狀況；note＝營業時間與 9/26–27 排程提醒（取自本站餐廳卡） */
+  /* 選餐廳（老闆勾選用）：卡片直接沿用 hotelDining／adultRestaurants／yardShops 原卡；avail＝2026-09-08 小煜實際詢問的訂位狀況 */
   pickRestaurants: [
     { group: "瑰麗館內（走路就到）", items: [
-      { pk: "nagi", src: "rest", go: "hotel-dining-sec", name: "NAGI", en: "義大利菜・全日餐廳", cuisine: "義大利菜", area: "瑰麗館內", meals: "午餐", status: "ok",
-        avail: "9/26、9/27 中午時段（12:00–14:30）10 位都有位子", note: "每日營業，午 12:00–15:00／晚 17:30–21:30；晚餐時段要的話小煜再問。" },
-      { pk: "choma", src: "rest", go: "hotel-dining-sec", name: "CHOMA（苧麻）", en: "日本料理・四種表現", cuisine: "壽司・鐵板燒・天婦羅・燒鳥", area: "瑰麗館內", meals: "晚餐", status: "ask",
-        avail: "官網看不出空位——有喜歡的話小煜 E-mail 去問", note: "只做晚餐 17:30–21:00、兩輪制；週三、週日休 → 只能排 9/26（六）晚餐。" },
-      { pk: "maas", src: "rest", go: "hotel-dining-sec", name: "MAAS", en: "海濱食堂", cuisine: "海鮮小屋料理", area: "瑰麗館內・海邊", meals: "午餐", status: "ask",
-        avail: "官網看不出空位——有喜歡的話小煜 E-mail 去問", note: "12:00–19:00（LO 17:00）；週二、週五休。⚠️ 7 月查到官網標示「暫時休業」，要的話一併確認是否恢復。" }
+      { pk: "nagi", from: "hotelDining", status: "ok", avail: "9/26、9/27 中午 12:00–14:30（10 位）" },
+      { pk: "choma", from: "hotelDining", status: "ask", avail: "官網看不出空位，想吃的話小煜 E-mail 去問（週日休，只能排 9/26 晚餐）" },
+      { pk: "maas", from: "hotelDining", status: "ask", avail: "官網看不出空位，想吃的話小煜 E-mail 去問" }
     ]},
     { group: "YARD（伊良部大橋橋頭・車程約 12–15 分）", items: [
-      { pk: "yardshop3", src: "poi", go: "yard", name: "Chinese Restaurant 一凛 宮古", en: "Ichirin・中餐廳", cuisine: "中菜（小籠包・辣子雞・宴席）", area: "YARD 內", meals: "午餐・晚餐", status: "ok",
-        avail: "9/26、9/27 中午、晚上都還有位子", note: "午 11:30–14:30／晚 17:30–22:00。" },
-      { pk: "yardshop4", src: "poi", go: "yard", name: "Island Café & Spanish Restaurant Blanquita", en: "西班牙料理・島咖啡", cuisine: "西班牙菜（海鮮飯・墨魚飯）", area: "YARD 內", meals: "午餐・晚餐", status: "ok",
-        avail: "9/26、9/27 中午、晚上都還有位子", note: "11:00–23:00 全日營業。" }
+      { pk: "yardshop3", from: "yardShops", area: "YARD 內", status: "ok", avail: "9/26、9/27 中午、晚上都還有" },
+      { pk: "yardshop4", from: "yardShops", area: "YARD 內", status: "ok", avail: "9/26、9/27 中午、晚上都還有" }
     ]},
     { group: "島上名店（平良市區・南岸）", items: [
-      { pk: "kihachi", src: "rest", go: "adult", name: "宮古牛焼肉 喜八", en: "Kihachi", cuisine: "宮古牛燒肉（一頭買い）", area: "平良市區・車程 15 分", meals: "晚餐", status: "ask",
-        avail: "需電話確認是否有位子（店家電話只在 16:00–18:00 受理）", note: "晚餐 18:00–22:00；本店與別館兩間，9/26、9/27 皆營業；10 人可能拆兩桌。" },
-      { pk: "ryugu", src: "rest", go: "adult", name: "炭火焼肉 琉宮苑", en: "Ryuguen", cuisine: "宮古牛＋海鮮炭火燒", area: "Shigira 區・車程 35 分", meals: "晚餐", status: "web",
-        avail: "網路可訂：9/26 17:00 或 19:30、9/27 17:00（線上上限 8 位，超過再電話加人數）", note: "晚餐 17:00–22:00；可跟南岸線（德國村／溫泉）排同一天。" },
-      { pk: "goku", src: "rest", go: "adult", name: "海鮮 悟空", en: "Kaisen Goku", cuisine: "海鮮・鄉土料理", area: "平良港邊・車程 15 分", meals: "午餐・晚餐", status: "ask",
-        avail: "需電話確認", note: "午 11:30–15:00／晚 17:15–22:00；⚠️ 週日午休 → 9/27 只能排晚餐。" },
-      { pk: "koja", src: "rest", go: "adult", name: "古謝そば屋", en: "Koja Soba", cuisine: "宮古そば（1932 年老店）", area: "平良・車程 15 分", meals: "午餐", status: "no",
-        avail: "一律不收訂位——現場排隊，避開 12–13 時尖峰、分批入座", note: "11:00–16:00 LO；9/26、9/27 皆營業；一碗約 ¥700–1,000。" }
+      { pk: "kihachi", from: "adultRestaurants", status: "ask", avail: "需電話確認是否有位子" },
+      { pk: "ryugu", from: "adultRestaurants", status: "web", avail: "9/26 17:00 或 19:30、9/27 17:00（線上 8 位，要的話再電話加人數）" },
+      { pk: "goku", from: "adultRestaurants", status: "ask", avail: "需電話確認" },
+      { pk: "koja", from: "adultRestaurants", status: "no", avail: "現場排隊入座" }
     ]},
     { group: "還沒問的其他選項（點了小煜再去問）", items: [
-      { pk: "yardshop1", src: "poi", go: "yard", name: "MUEH Brewing × CHIKI CHIKI", en: "精釀啤酒 × 烤雞", cuisine: "旋轉烤雞・塔可飯・精釀啤酒", area: "YARD 內", meals: "午餐・晚餐", status: "none",
-        avail: "尚未詢問訂位", note: "11:00–22:00；爸爸喝在地精釀、小孩吃烤雞，一攤搞定。" },
-      { pk: "rakuen", src: "rest", go: "adult", name: "楽園の果実", en: "Rakuen no Kajitsu", cuisine: "芒果農園 café（布丁・咖哩）", area: "来間島・車程 35 分", meals: "午餐・下午茶", status: "none",
-        avail: "尚未詢問（現況不收訂位，10 人可電話確認）", note: "11:00–18:00；週二休；⚠️ 9 月下旬已過鮮芒果季，甜點依季節調整。" }
+      { pk: "yardshop1", from: "yardShops", area: "YARD 內", status: "none", avail: "點愛心小煜再去問" },
+      { pk: "rakuen", from: "adultRestaurants", status: "none", avail: "點愛心小煜再去問" }
     ]}
   ],
 
@@ -927,6 +906,8 @@ window.tripData = {
 
 
 
+  window.__cards={rest:restCard,poi:poiCard};
+
   /* 行前清單 */
   $("checklist-groups").innerHTML = D.checklist.map(g => `
     <div class="check-group">
@@ -1018,7 +999,6 @@ window.tripData = {
     },520);
   }
   dockBtns.forEach(function(b){ b.addEventListener('click',function(){ switchCh(+b.dataset.ch); }); });
-  window.__goSec=function(sec){ var n=SEC2CH[sec]; if(n) switchCh(n,sec); };
 
   /* 章節列：捲過封面、內容進畫面才浮出 */
   var dockIO=new IntersectionObserver(function(es){
@@ -1070,45 +1050,40 @@ window.tripData = {
 })();
 </script>
 <script>
-/* ── 選餐廳：愛心勾選＋想吃清單一鍵複製（狀態存 localStorage，換手機不共用） ── */
+/* ── 選餐廳：原餐廳卡＋愛心勾選＋訂位狀況；想吃清單一鍵複製（狀態存 localStorage，換手機不共用） ── */
 (function(){
-  var D=window.tripData; if(!D||!D.pickRestaurants) return;
+  var D=window.tripData, C=window.__cards; if(!D||!D.pickRestaurants||!C) return;
   var $=function(id){ return document.getElementById(id); };
   var esc=function(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
   var KEY="miyako_wish_v1";
   var STAT={ok:"✅ 有位子",web:"🌐 網路可訂",ask:"📞 要再確認",no:"🚫 不可預訂",none:"❔ 尚未詢問"};
+  var KIND={hotelDining:"rest",adultRestaurants:"rest",yardShops:"poi"};
   var all={}, order=[];
-  D.pickRestaurants.forEach(function(g){ g.items.forEach(function(r){ all[r.pk]=r; order.push(r.pk); }); });
+  D.pickRestaurants.forEach(function(g){ g.items.forEach(function(p){
+    var base=(D[p.from]||[]).filter(function(x){ return x.pk===p.pk; })[0]; if(!base) return;
+    p.base=Object.assign({},base,{name:String(base.name||"").replace(/^[①-⑳]\s*/,"")});   /* YARD 店名去掉地圖編號 */
+    p.name=p.base.name; p.area=p.area||base.area||""; all[p.pk]=p; order.push(p.pk);
+  }); });
 
   var state={liked:[],note:""};
   try{ var raw=localStorage.getItem(KEY); if(raw){ var j=JSON.parse(raw); if(j&&Array.isArray(j.liked)) state.liked=j.liked.filter(function(k){ return all[k]; }); if(j&&typeof j.note==="string") state.note=j.note; } }catch(e){}
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(state)); }catch(e){} }
   function isLiked(pk){ return state.liked.indexOf(pk)>=0; }
 
-  /* 卡片 */
-  function thumb(r){
-    var pool=(r.src==="poi"?window.POI_PHOTOS:window.REST_PHOTOS)||{};
-    var arr=pool[r.pk]||[]; return arr.length?arr[0]:"";
-  }
-  function card(r){
-    var t=thumb(r);
-    return '<div class="pcard'+(isLiked(r.pk)?' liked':'')+'" data-pk="'+esc(r.pk)+'">'+
-      '<button type="button" class="heart" data-pk="'+esc(r.pk)+'" aria-pressed="'+(isLiked(r.pk)?'true':'false')+'" aria-label="想吃 '+esc(r.name)+'">'+(isLiked(r.pk)?'♥':'♡')+'</button>'+
-      '<span class="heart-lb">想吃</span>'+
-      '<div class="pcard-main">'+
-        (t?'<img class="pthumb" src="'+t+'" alt="'+esc(r.name)+'" loading="lazy">':'')+
-        '<div class="pcard-txt">'+
-          '<h3>'+esc(r.name)+' <span class="en">'+esc(r.en||"")+'</span></h3>'+
-          '<div class="chips"><span class="chip meal">'+esc(r.meals)+'</span><span class="chip">'+esc(r.cuisine)+'</span><span class="chip">'+esc(r.area)+'</span></div>'+
-          '<div class="pstat '+esc(r.status)+'"><b>'+esc(STAT[r.status]||"")+'</b>　'+esc(r.avail)+'</div>'+
-          (r.note?'<div class="pnote">'+esc(r.note)+'</div>':'')+
-          '<a class="plink" data-go="'+esc(r.go)+'">完整介紹與照片 ›</a>'+
-        '</div>'+
-      '</div>'+
-    '</div>';
+  /* 卡片＝原餐廳卡，再加：右上角愛心、chips 下方訂位狀況列 */
+  function card(p){
+    var tmp=document.createElement("div"); tmp.innerHTML=C[KIND[p.from]](p.base);
+    var c=tmp.firstElementChild; c.classList.add("pcard"); c.dataset.pk=p.pk; if(isLiked(p.pk)) c.classList.add("liked");
+    var h=document.createElement("button"); h.type="button"; h.className="heart"; h.dataset.pk=p.pk;
+    h.setAttribute("aria-pressed",isLiked(p.pk)?"true":"false"); h.setAttribute("aria-label","想吃 "+p.name); h.textContent=isLiked(p.pk)?"♥":"♡";
+    var lb=document.createElement("span"); lb.className="heart-lb"; lb.textContent="想吃";
+    c.insertBefore(lb,c.firstChild); c.insertBefore(h,c.firstChild);
+    var st=document.createElement("div"); st.className="pstat "+p.status; st.innerHTML="<b>"+esc(STAT[p.status]||"")+"</b>　"+esc(p.avail);
+    var chips=c.querySelector(".chips"); if(chips) chips.insertAdjacentElement("afterend",st); else c.appendChild(st);
+    return c.outerHTML;
   }
   $("pick-list").innerHTML=D.pickRestaurants.map(function(g){
-    return '<div class="pick-group">'+esc(g.group)+'</div>'+g.items.map(card).join("");
+    return '<div class="pick-group">'+esc(g.group)+'</div>'+g.items.filter(function(p){ return all[p.pk]; }).map(card).join("");
   }).join("");
 
   /* 想吃清單 */
@@ -1119,7 +1094,7 @@ window.tripData = {
   function buildText(){
     var picked=order.filter(isLiked);
     var lines=["【宮古島 想吃清單】9/26（六）・9/27（日）午晚餐"];
-    picked.forEach(function(pk,i){ var r=all[pk]; lines.push((i+1)+". "+r.name+"（"+r.area+"・"+r.meals+"）"); });
+    picked.forEach(function(pk,i){ var p=all[pk]; lines.push((i+1)+". "+p.name+(p.area?"（"+p.area+"）":"")); });
     lines.push("共 "+picked.length+" 間");
     var n=(noteEl.value||"").trim(); if(n) lines.push("備註："+n);
     return lines.join("\n");
@@ -1130,8 +1105,8 @@ window.tripData = {
     if(!picked.length){
       body.innerHTML='<div class="wish-empty">還沒有選——往上點餐廳右上角的 ♡ 就會加進來。</div>';
     }else{
-      body.innerHTML='<ul class="wish-list">'+picked.map(function(pk,i){ var r=all[pk];
-        return '<li><span class="no">'+(i+1)+'.</span><span class="nm">'+esc(r.name)+'<small>'+esc(r.area)+'・'+esc(r.meals)+'・'+esc(STAT[r.status]||"")+'</small></span><button type="button" class="rm" data-pk="'+esc(pk)+'" aria-label="移除 '+esc(r.name)+'">✕</button></li>';
+      body.innerHTML='<ul class="wish-list">'+picked.map(function(pk,i){ var p=all[pk];
+        return '<li><span class="no">'+(i+1)+'.</span><span class="nm">'+esc(p.name)+'<small>'+esc(p.area)+(p.area?'・':'')+esc(STAT[p.status]||"")+'</small></span><button type="button" class="rm" data-pk="'+esc(pk)+'" aria-label="移除 '+esc(p.name)+'">✕</button></li>';
       }).join("")+'</ul>';
     }
     copyBtn.disabled=!picked.length;
@@ -1167,8 +1142,7 @@ window.tripData = {
 
   /* 事件 */
   $("pick-list").addEventListener("click",function(ev){
-    var h=ev.target.closest(".heart"); if(h){ toggle(h.dataset.pk); return; }
-    var a=ev.target.closest(".plink"); if(a&&window.__goSec){ ev.preventDefault(); window.__goSec(a.dataset.go); }
+    var h=ev.target.closest(".heart"); if(h) toggle(h.dataset.pk);
   });
   body.addEventListener("click",function(ev){ var b=ev.target.closest(".rm"); if(b) toggle(b.dataset.pk); });
   noteEl.addEventListener("input",function(){ state.note=noteEl.value; save(); textEl.textContent=buildText(); });

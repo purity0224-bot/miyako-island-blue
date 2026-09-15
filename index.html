@@ -319,6 +319,9 @@
   footer{padding:40px 0 60px;text-align:center;font-size:.78rem;color:#999;letter-spacing:.15em}
   .footer-tag{margin-top:8px;letter-spacing:.4em;color:var(--gold);opacity:.55}
 
+  .detail-open{margin-top:10px;border-top:1px dashed var(--line);padding-top:10px;font-size:.88rem;color:#5a4c3c;line-height:1.8}
+  .detail-open div{margin:3px 0}
+  .detail-open b{color:var(--navy)}
   /* ── 已訂好 ── */
   .booked-box{background:rgba(92,138,90,.08);border:2px solid var(--grass);border-radius:16px;padding:18px 18px 14px;margin:6px 0 18px;position:relative}
   .booked-tag{display:inline-block;background:var(--grass);color:#fff;font-size:.78rem;letter-spacing:.12em;padding:3px 12px;border-radius:999px;margin-bottom:8px;font-weight:700}
@@ -866,7 +869,7 @@ window.tripData = {
       ${r.drive?`<div class="kv">🚗 <b>離瑰麗車程</b>：${esc(r.drive)}</div>`:""}
       <div class="kv"><b>安排場次</b>：${esc(r.slot||r.scene||"—")}</div>
       ${rph}
-      ${det("訂位・價位・營業時間", detail)}
+      <div class="detail-open">${detail}</div>
       <a class="maps-btn" target="_blank" rel="noopener" href="${r.mapsUrl||maps(r.mapsQ)}">地圖</a>
     </div>`;
   }

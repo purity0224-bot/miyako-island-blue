@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宮古島・親子海上活動</title>
+<style>
+:root{
+    /* 水墨畫意版統一色票（2026-07-05 接入）：宣紙暖底＋珊瑚橘一抹重點色 */
+    --navy:#4a3a28; --navy-deep:#332818;      /* 原深藍改深墨茶（標題與實色填底） */
+    --gold:#c39140; --gold-soft:#e8d2a8;
+    --copper:#1f8a9d; --copper-soft:#5fb3c2;  /* 宮古藍（珊瑚礁海的藍綠，全站重點色） */
+    --grass:#5c8a5a;
+    --ink:#26201a; --paper:#EDE4D3; --card:#fbf6ec;
+    --line:#d9cbb2; --tip-bg:#e7dcc5;
+    --red:#b04a3a; --warn-bg:#f6e3d3;
+    /* 情境幕 token（沿用 ink-painterly-deck） */
+    --paper-2:#E6DBC7; --paper-hi:#f6efe1;
+    --sunset:#1f8a9d; --ocean:#cf7a5a; --ink-soft:#5a4c3c;
+    --serif-en:'Didot','Bodoni 72','Cormorant Garamond',Georgia,serif;
+    --t-slow:2.6s; --t-med:1.1s; --ease-ink:cubic-bezier(.22,1,.36,1);
+  }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    font-family:"Noto Serif TC","Songti TC","STSong","PingFang TC",Georgia,serif;
+    background:var(--paper);color:var(--ink);line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+  }
+.wrap{max-width:760px;margin:0 auto;padding:0 18px}
+@keyframes tickm{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.ink-cover{
+    position:relative;min-height:100vh;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+    text-align:center;padding:40px 28px 116px;
+    background:linear-gradient(180deg,var(--paper-hi) 0%,var(--paper) 46%,var(--paper-2) 100%);
+    border-bottom:1px solid var(--line);
+  }
+@keyframes clipInk{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.ink-cover .inner{position:relative;z-index:3}
+.ink-cover .zh-side{position:absolute;left:18px;top:48%;z-index:3;writing-mode:vertical-rl;font-size:13px;letter-spacing:.4em;color:var(--sunset);opacity:.8}
+.ink-cover .kicker{font-family:var(--serif-en);font-size:11px;letter-spacing:.38em;text-transform:uppercase;color:var(--sunset)}
+.ink-cover h1{font-weight:600;font-size:clamp(52px,13vw,84px);letter-spacing:.14em;line-height:1.06;margin:12px 0 6px;color:var(--ink);text-shadow:0 2px 20px rgba(246,239,225,.8)}
+.ink-cover .en{font-family:var(--serif-en);font-size:15px;letter-spacing:.4em;color:var(--ink-soft);text-transform:uppercase}
+.ink-cover .rule{width:40px;height:1px;background:var(--sunset);opacity:.8;margin:22px auto}
+.ink-cover .dates{font-family:var(--serif-en);font-style:italic;font-size:16px;color:var(--ink)}
+.ink-cover .who{font-size:12.5px;letter-spacing:.14em;color:var(--ink-soft);margin-top:6px}
+.ink-cover .stamp{margin-top:14px;font-size:.72rem;opacity:.55;letter-spacing:.2em;color:var(--ink-soft)}
+.ink-cover .dot{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);z-index:3;width:24px;height:24px;background:var(--sunset);border-radius:50%;opacity:.9}
+.ink-cover .scrollcue{position:absolute;bottom:80px;left:0;right:0;z-index:3;font-size:11px;letter-spacing:.3em;color:var(--ink-soft);opacity:.6}
+.rise{opacity:0;transform:translateY(22px);animation:rise 1.2s var(--ease-ink) forwards}
+.rise.a{animation-delay:.6s}
+.rise.b{animation-delay:.9s}
+.rise.c{animation-delay:1.2s}
+.rise.d{animation-delay:1.6s}
+.rise.e{animation-delay:2s}
+@keyframes rise{to{opacity:1;transform:none}}
+.dot.rise{animation:rise 1.4s var(--ease-ink) 2.2s forwards}
+.float-slow{animation:floaty 6s ease-in-out infinite 2.6s}
+@keyframes floaty{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-9px)}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity var(--t-med) var(--ease-ink),transform var(--t-med) var(--ease-ink)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.08s}
+.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.32s}
+.reveal.d4{transition-delay:.44s}
+@keyframes petalfall{
+    from{transform:translateY(-30px) translateX(0) rotate(0)}
+    to{transform:translateY(var(--fall)) translateX(var(--drift)) rotate(var(--spin))}}
+#chnav{
+    position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;
+    background:rgba(237,228,211,.96);backdrop-filter:blur(10px);
+    border-top:1px solid var(--line);
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom));
+    transform:translateY(110%);transition:transform .7s var(--ease-ink);
+  }
+body.js-ch #chnav{display:block}
+#chnav.show{transform:none}
+#chnav .inner{display:flex;gap:6px;max-width:560px;margin:0 auto}
+#chnav button{
+    flex:1;appearance:none;background:transparent;border:1px solid transparent;border-radius:999px;
+    font-family:inherit;padding:8px 2px;font-size:.85rem;letter-spacing:.06em;color:var(--navy);cursor:pointer;
+    transition:background .4s var(--ease-ink),color .4s var(--ease-ink);
+  }
+#chnav button.active{background:var(--navy);color:#fff}
+body.js-ch .chapter{display:none}
+body.js-ch .chapter.on{display:block;animation:chIn .9s var(--ease-ink)}
+@keyframes chIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+body.js-ch{padding-bottom:74px}
+#ch-curtain{
+    position:fixed;inset:0;z-index:90;pointer-events:none;display:flex;align-items:center;justify-content:center;
+    background:
+      radial-gradient(60% 50% at 50% 42%,rgba(31,138,157,.10),transparent 70%),
+      linear-gradient(105deg,var(--paper-hi),var(--paper) 55%,var(--paper-2));
+    clip-path:inset(0 100% 0 0);
+  }
+#ch-curtain.cover{clip-path:inset(0 0 0 0);transition:clip-path .5s var(--ease-ink)}
+#ch-curtain.cover.uncover{clip-path:inset(0 0 0 100%);transition:clip-path .6s var(--ease-ink)}
+#ch-curtain .ct{font-size:30px;letter-spacing:.32em;color:var(--ink);opacity:.32;font-weight:600}
+@media print{#chnav,#ch-curtain{display:none!important}
+body.js-ch .chapter{display:block!important}}
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.sec-title{display:flex;align-items:center;gap:12px;font-size:1.65rem;color:var(--navy);
+    letter-spacing:.06em;margin-bottom:6px;font-weight:700}
+.sec-title::before{content:"";width:6px;height:1.5rem;flex:0 0 6px;
+    background:linear-gradient(180deg,var(--copper),var(--gold));border-radius:3px}
+.sec-sub{color:var(--gold);font-size:.92rem;letter-spacing:.08em;margin-bottom:24px}
+.card{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:20px 20px 16px;margin-bottom:16px;box-shadow:0 1px 4px rgba(38,52,58,.05);
+  }
+.card h3{color:var(--navy);font-size:1.12rem;letter-spacing:.04em;margin-bottom:4px}
+.card h3 .en{display:block;margin-top:3px;color:var(--gold);font-size:.8rem;letter-spacing:.08em}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.chip{
+    font-size:.74rem;padding:2px 10px;border-radius:999px;letter-spacing:.05em;
+    background:var(--tip-bg);color:var(--navy);border:1px solid var(--line);
+  }
+.chip.grade-S{background:var(--navy);color:#fff;border-color:var(--navy)}
+.chip.grade-A{background:var(--gold-soft);color:var(--navy-deep);border-color:var(--gold)}
+.chip.grade-B{background:#eee;color:#555}
+.chip.warn{background:var(--warn-bg);color:var(--red);border-color:#e5c2b0}
+.card p.desc{font-size:.98rem;margin:6px 0 4px;line-height:1.9}
+.sec-title,.card h3{text-wrap:balance}
+details summary{font-weight:600}
+.kv{font-size:.88rem;margin:3px 0;color:#5a4c3c}
+.kv b{color:var(--navy)}
+.maps-btn{
+    display:inline-block;margin-top:10px;padding:7px 18px;border-radius:999px;text-decoration:none;
+    background:var(--navy);color:#fff;font-size:.84rem;letter-spacing:.08em;
+  }
+details{margin-top:10px;border-top:1px dashed var(--line);padding-top:8px}
+summary{cursor:pointer;color:var(--copper);font-size:.86rem;letter-spacing:.05em;list-style:none}
+summary::before{content:"▸ "}
+details[open] summary::before{content:"▾ "}
+details .inner-d{font-size:.88rem;padding:8px 2px;color:#5a4c3c}
+@media (max-width:600px){
+    .tl{margin-left:4px}
+    .tl li{padding:8px 0 8px 16px;min-height:0;border-left:2px solid rgba(31,138,157,.28)}
+    .tl li::before{
+      position:static;display:block;width:auto;text-align:left;
+      font-size:.8rem;font-weight:700;letter-spacing:.08em;
+    }
+    .tl li::after{left:-4px;top:17px;width:6px;height:6px;opacity:1}
+  }
+.tip{
+    background:var(--tip-bg);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+    padding:12px 16px;font-size:.9rem;margin:18px 0;color:#4a4335;
+  }
+.warn-box{
+    background:var(--warn-bg);border-left:3px solid var(--red);border-radius:0 10px 10px 0;
+    padding:12px 16px;font-size:.9rem;margin:18px 0;color:#6b3a2e;
+  }
+table{width:100%;border-collapse:collapse;font-size:.87rem;margin:12px 0}
+th{background:var(--navy);color:#fff;padding:8px 10px;text-align:left;letter-spacing:.04em;font-weight:600}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:nth-child(even) td{background:rgba(230,219,199,.45)}
+.kv-hl{background:rgba(31,138,157,.08);border-left:3px solid var(--copper);padding:4px 10px;border-radius:0 8px 8px 0;font-weight:600;font-size:.95rem}
+.gallery{display:flex;gap:8px;overflow-x:auto;margin-top:12px;padding-bottom:6px;
+    -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;border-radius:8px}
+.gallery img{height:150px;width:auto;border-radius:8px;flex:0 0 auto;scroll-snap-align:start;background:var(--tip-bg)}
+.gallery.lg img{height:180px}
+.gal-hint{font-size:.74rem;color:var(--ink-soft);opacity:.65;letter-spacing:.08em;text-align:center;margin-top:2px}
+footer{padding:40px 0 60px;text-align:center;font-size:.78rem;color:#999;letter-spacing:.15em}
+.footer-tag{margin-top:8px;letter-spacing:.4em;color:var(--gold);opacity:.55}
+
+  .ink-cover{min-height:88vh}
+  .ink-cover .hero{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;mix-blend-mode:multiply;filter:saturate(.8) contrast(.9)}
+  .ink-cover::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(237,228,211,.35) 0%,rgba(237,228,211,.15) 45%,rgba(237,228,211,.55) 100%);z-index:1}
+  .ink-cover .inner{position:relative;z-index:2;text-align:center;padding:26px 22px 24px;background:rgba(251,246,236,.82);border:1px solid rgba(255,255,255,.7);border-radius:18px;margin:0 22px;backdrop-filter:blur(3px);box-shadow:0 6px 24px rgba(38,32,26,.12)}
+  .ink-cover h1{font-size:clamp(2.3rem,8.5vw,3.4rem);line-height:1.25;color:var(--navy-deep);letter-spacing:.08em;margin:6px 0 10px}
+  .ink-cover .kicker{font-family:var(--serif-en);font-size:13px;letter-spacing:.35em;text-transform:uppercase;color:var(--ink-soft)}
+  .ink-cover .en{font-family:var(--serif-en);font-size:15px;letter-spacing:.3em;color:var(--ink-soft);text-transform:uppercase}
+  .ink-cover .rule{width:56px;height:1px;background:var(--copper);margin:18px auto}
+  .ink-cover .dates,.ink-cover .who{font-size:.95rem;color:#4a3f30;letter-spacing:.06em;line-height:1.9}
+  .ink-cover .scrollcue{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:.8rem;letter-spacing:.2em;color:var(--ink-soft);z-index:2}
+  .wrap{padding-top:34px}
+
+  .act{margin-top:30px;scroll-margin-top:12px}
+  .act-head{margin:6px 0 16px;padding:16px 18px;border-radius:14px;background:linear-gradient(135deg,rgba(31,138,157,.10),rgba(31,138,157,.02));border:1px solid rgba(31,138,157,.25)}
+  .act-head .meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.88rem;color:var(--copper);font-weight:700;letter-spacing:.04em}
+  .act-head p{font-size:.94rem;color:#4a4335;margin-top:8px;line-height:1.85}
+  .fit{padding:8px 12px;border-radius:0 8px 8px 0;border-left:3px solid;margin:8px 0 10px;font-size:.9rem;line-height:1.65}
+  .fit.ok{background:rgba(92,138,90,.1);border-color:var(--grass);color:#3f6a3d}
+  .fit.mid{background:var(--tip-bg);border-color:var(--gold);color:#6d5322}
+  .fit.no{background:var(--warn-bg);border-color:var(--red);color:#8a3a2c}
+  .pick-group{margin:22px 0 10px;display:flex;align-items:center;gap:10px;color:var(--copper);font-size:.8rem;letter-spacing:.14em;font-weight:700}
+  .pick-group::after{content:"";flex:1;height:1px;background:var(--line)}
+  .card h3 .en{color:#8a7d6b;letter-spacing:.04em;font-size:.78rem}
+  .card .kv b{color:var(--navy)}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+  .btns .maps-btn{margin-top:6px}
+  .maps-btn.ghost{background:transparent;color:var(--navy);border:1px solid var(--navy)}
+  .gallery img{cursor:zoom-in}
+  .plan{list-style:none;margin:8px 0}
+  .plan li{padding:10px 0;border-bottom:1px dashed var(--line);font-size:.95rem;line-height:1.75}
+  .plan li b{color:var(--navy)}
+  .plan li small{display:block;color:#8a7d6b;font-size:.8rem}
+  .card .kv{font-size:.92rem;margin:6px 0;line-height:1.75}
+  .card .kv.kv-hl{margin:10px 0;padding:8px 12px;font-size:.95rem}
+  .menu{margin-top:12px;padding:12px 14px;background:var(--tip-bg);border-radius:10px;font-size:.9rem}
+  .menu b{color:var(--navy)}
+  .menu ul{margin:6px 0 0 18px}
+  .menu li{margin:2px 0}
+
+  #lb{position:fixed;inset:0;z-index:100;background:rgba(20,16,12,.94);display:none;align-items:center;justify-content:center;flex-direction:column}
+  #lb.on{display:flex}
+  #lb img{max-width:96vw;max-height:80vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.6);object-fit:contain;background:#000}
+  #lb .cap{color:#e8dcc5;font-size:.86rem;letter-spacing:.06em;margin-top:12px;text-align:center;padding:0 20px}
+  #lb .x{position:absolute;top:14px;right:16px;color:#fff;font-size:30px;line-height:1;background:transparent;border:none;cursor:pointer;padding:8px;font-family:inherit}
+  #lb .nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:34px;background:rgba(255,255,255,.08);border:none;border-radius:50%;width:48px;height:48px;cursor:pointer;font-family:inherit}
+  #lb .prev{left:8px} #lb .next{right:8px}
+</style>
+</head>
+<body>
+
+<section class="ink-cover" id="cover">
+  <img class="hero" src="img/hero.jpg" alt="宮古島珊瑚礁海域">
+  <div class="inner">
+    <div class="kicker rise a">Miyakojima · Family Sea Days</div>
+    <h1 class="rise b">宮古島<br>親子海上活動</h1>
+    <div class="en rise b">Kids 4 &amp; 6 · Ocean Activities</div>
+    <div class="rule rise c"></div>
+    <div class="dates rise c">9/25–9/28・9 大 2 小（4 歲、6 歲）</div>
+    <div class="who rise d">半潛式觀光船・透明獨木舟・海龜浮潛・中之島浮潛・雙體船出海</div>
+  </div>
+  <div class="scrollcue rise e">向下捲動 ⌄</div>
+</section>
+
+<div class="wrap">
+  <div id="summary"></div>
+  <div id="acts"></div>
+</div>
+
+<footer>
+  <div class="footer-tag">MIYAKOJIMA · FAMILY SEA DAYS</div>
+  <div style="font-size:.74rem;color:#8a7d6b;letter-spacing:.06em;margin-top:8px">資料查證日 2026-09-16・價格與時間以業者為準・新台幣以 1 日圓 ≈ 0.205 換算・照片取自業者官網、預約平台與 Google Maps</div>
+</footer>
+<div id="lb" role="dialog" aria-modal="true"><button class="x" aria-label="關閉">×</button><button class="nav prev" aria-label="上一張">‹</button><img alt=""><button class="nav next" aria-label="下一張">›</button><div class="cap"></div></div>
+
+<script>
+window.D = {"names": {"seasky": "シースカイ博愛 半潛式觀光船", "clearkayak": "透明獨木舟", "turtle": "海龜浮潛", "nakanoshima": "中之島 熱帶魚＆珊瑚浮潛", "catamaran": "雙體船包船出海"}, "rate": "匯率以 2026-09-16 的 1 日圓 ≈ 0.205 新台幣換算，取整數", "acts": [{"id": "seasky", "title": "シースカイ博愛 半潛式水中觀光船", "sub": "宮古島唯一的半潛水式觀光船・不用下水就能看珊瑚和熱帶魚・約 45 分鐘", "meta": ["⏱ 約 45 分", "📍 博愛漁港出發（Shigira 旁）", "🚗 離瑰麗約 35 分", "🗓 全年每天 7 班"], "intro": "1995 年就航的老字號觀光船，現在由 Shigira 集團營運。乘客走到水下約 2 公尺的展望室，隔著大窗看水深 25 公尺的珊瑚礁和熱帶魚，運氣好會有海龜游過。船可坐 60 人（展望室 38 席），是宮古島唯一的半潛水式船，也是不想下水那天最輕鬆的選項。", "fit": "ok|沒有年齡下限，幼兒每位付費大人免費帶 1 位；可以先預訂票，但不能包船", "basics": [["體驗時間", "約 45 分；班次 9:00／10:00／11:00／13:00／14:00／15:00／16:00，開船前 20 分鐘到漁港報到"], ["車程", "離瑰麗約 35 分（南岸，與 Shigira、德國村同一區，可排同一天）"], ["費用", "大人（高中以上）¥2,000 ≈ NT$410；小學～國中 ¥1,000 ≈ NT$205；未就學每位大人免費帶 1 位。本團 9 大 2 小：¥18,000 ≈ NT$3,700"], ["年齡", "無年齡下限；12 歲以下需 18 歲以上大人同行"], ["出發地", "博愛漁港（宮古島市上野宮国 904-14），免費停車約 20 台"], ["預約", "可以先預訂票，但這艘船不提供包船。想保證全團同一班，可以把 9/26 某一航班剩下的票全部訂下來（9/27 的票剩不多）", "hl"], ["注意", "船上不賣暈船藥，易暈的人先吃；風速 10 m/s 或浪高 1.5 m 以上停航；不能穿潛水衣上船"], ["教練", "沒有中文教練（船上只有日文廣播），建議搭配地陪"]], "web": "https://act.shigira.com/top/products/f78764f2-4129-5bc9-aa08-b24630c930c2?lng=ja-JP", "webLabel": "線上預約", "mapsQ": "シースカイ博愛 宮古島"}, {"id": "clearkayak", "title": "透明獨木舟", "sub": "坐在透明的船身上看下面的珊瑚和魚・2 歲就能坐・附無人機空拍", "meta": ["⏱ 約 1–1.5 小時", "📍 新城海岸／インギャー，依當天海況", "🚗 離瑰麗約 30–40 分", "🛶 一艘 2–3 人"], "intro": "透明壓克力船身的獨木舟，不用下水就能看海底，小孩坐中間、大人前後划。集合海灘依當天風向前一天通知，通常是東岸的新城海岸或南岸的インギャーマリンガーデン，都是浪小的礁內海域，多數業者附無人機空拍和照片檔。", "fit": "ok|2 歲起可坐，4 歲、6 歲和大人同艇；多數業者未就學免費", "basics": [["體驗時間", "約 1 到 1.5 小時（划船 1 小時左右，加上說明與穿裝備）"], ["車程", "離瑰麗約 30 分（南岸インギャー）到 40 分（東岸新城海岸），集合點前一天通知，要自己開車去"], ["費用", "大人約 ¥6,800 ≈ NT$1,400；小學生半價約 ¥3,400 ≈ NT$700；未就學免費。本團 9 大 2 小約 ¥61,200 ≈ NT$12,600"], ["年齡", "2 歲起；未滿 13 歲需大人同艇"], ["人數", "一艘 2 到 3 人、合計體重 100 kg 以內，11 人約 4 到 5 艘同時出發"], ["注意", "穿水母衣和帽子，船上反光很曬；天候不佳前一天通知取消；6 歲若已上小學算小學生價，預約時寫實際年齡"], ["教練", "沒有中文教練，建議搭配地陪"]]}, {"id": "turtle", "title": "海龜浮潛（岸邊下水）", "sub": "新城海岸最適合小孩・從沙灘走進礁湖・3 歲起・救生衣＋浮圈＋教練帶著", "meta": ["⏱ 約 2 小時", "📍 新城海岸（首選）／シギラビーチ", "🚗 約 40 分（新城）／約 35 分（Shigira）", "🐢 新城遭遇率約 95%，不保證"], "intro": "帶小孩看海龜，首選東岸的新城海岸。它是一整片被外側礁石圍起來的礁湖，外海的浪打不進來，礁內水深只有 1 到 3 公尺、近岸大人站得到底，沙灘是緩坡慢慢走進海裡，不用跳水也不用坐船。海龜就在離岸幾十公尺的海草區吃草，小孩穿救生衣趴在大浮圈上，教練牽著浮圈帶過去，全程不用自己游；不敢把臉放進水裡的，用「箱メガネ」從水面往下看也行。岸上有停車場、廁所、淋浴和租借店，是宮古島業者最常帶幼兒去的海龜點。", "fit": "ok|3 歲起，少部分業者要求要 5 歲；新城海岸礁內浪小水淺，是最適合小孩的海龜點", "basics": [["為什麼新城適合小孩", "礁石圍住的礁湖，浪小；水深 1 到 3 公尺，近岸站得到底；沙灘緩坡入水；海龜在近岸海草區，不用游遠；教練全程牽浮圈"], ["安全配備", "救生衣（有幼兒尺寸）、大浮圈、防滑鞋、面鏡呼吸管；教練有水難救助員資格，一路陪在小孩旁邊"], ["體驗時間", "約 2 小時（水中約 1.5 小時）；一天四梯 8:30／10:30／13:30／15:30，滿潮前後 1 到 2 小時最好、早上為佳"], ["車程", "離瑰麗約 40 分（新城海岸，東岸）"], ["費用", "大人約 ¥6,900–7,900 ≈ NT$1,400–1,600；小孩約 ¥4,900–5,900 ≈ NT$1,000–1,200（部分業者大小同價）。本團 9 大 2 小約 ¥71,900 ≈ NT$14,800"], ["年齡", "3 歲起，少部分業者要求要 5 歲；未滿 10 歲需家長同行"], ["教練", "沒有中文教練，建議搭配地陪；水中照片多數免費"]], "mapsQ": "新城海岸 宮古島"}, {"id": "nakanoshima", "title": "中之島 熱帶魚＆珊瑚浮潛", "sub": "下地島西岸的礁湖・珊瑚和熱帶魚密度全島數一數二・有中文教練", "meta": ["⏱ 1–3 小時", "📍 中の島ビーチ（下地島）", "🚗 離瑰麗約 35–40 分（過伊良部大橋）", "🗣 中文教練・9/26、9/27 下午"], "intro": "中之島海灘（中の島ビーチ）在下地島西岸，一片被礁石圍起來的天然礁湖，浪小、水淺、透明度高，從岸邊走幾步就是珊瑚和成群的熱帶魚，被稱為「會游泳的水族館」。這裡不是海龜點，重點是珊瑚和魚，和海龜浮潛是不同海灘、不同體驗。已經找到會講中文的教練，9/26、9/27 下午有時段，小孩全程有教練帶。", "fit": "ok|4 歲、6 歲都可以參加，有中文教練全程帶", "basics": [["可預約時段", "9/26（六）、9/27（日）下午"], ["體驗時間", "1 到 3 小時，依小孩狀況調整"], ["車程", "離瑰麗約 35 到 40 分，過伊良部大橋到下地島西岸；海灘旁有停車場"], ["費用", "每人 ¥11,000 ≈ NT$2,260；11 位共 ¥121,000 ≈ NT$24,800"], ["教練", "中文教練，4 歲、6 歲都能參加"]], "mapsQ": "中の島ビーチ 下地島"}, {"id": "catamaran", "title": "雙體船包船出海", "sub": "瑰麗飯店配合的業者・6 小時・含燒烤、浮潛、水上摩托車", "meta": ["⏱ 6 小時", "⛵ 雙體帆船（catamaran）", "🍖 船員在船上烤肉", "🗣 沒有中文教練"], "intro": "由瑰麗飯店配合的雙體帆船業者安排，11 人一船出海 6 小時。雙體船比一般快艇穩、甲板寬，小孩在船上走動比較安全。基本方案含燒烤午餐（船員烤好端上來）、浮潛和水上摩托車，另可加購香蕉船、SUP、釣魚、潛水。停船的點看當天海況，可以浮潛、玩水或在船上看海。", "fit": "mid|4 歲、6 歲都可以上船，但船上的項目（浮潛、水上摩托車、香蕉船、SUP、釣魚）沒有一項適合 4 歲小孩，6 小時怕小孩覺得無聊", "basics": [["體驗時間", "6 小時（可加時，每小時 ¥100,000）"], ["小孩注意", "沒有適合 4 歲小孩的項目，6 小時在船上怕無聊；要帶打發時間的東西（玩具、平板、零食），或考慮小孩留在飯店只有大人出海"], ["基本方案", "1 到 6 人 ¥800,000，含燒烤、浮潛、水上摩托車；第 7 人起每人 ¥60,000（含燒烤）或 ¥40,000（不含燒烤）"], ["本團 11 人試算", "9 大 2 小全含燒烤：¥800,000 ＋ 5 × ¥60,000 ＝ ¥1,100,000，加 15% 服務費與 10% 稅約 ¥1,391,500 ≈ NT$285,000。若兩位小孩不算燒烤：¥1,060,000，含稅約 ¥1,340,900 ≈ NT$275,000"], ["加購項目", "香蕉船 ¥20,000／20 分鐘一場；SUP ¥20,000／艘；釣魚 ¥10,000／人；潛水 ¥80,000／組（6 人以內）每次；以上都另加 15% 服務費與 10% 稅"], ["安排", "瑰麗飯店配合之廠商，集合與出發方式依飯店安排"], ["教練", "沒有中文教練，建議搭配地陪"], ["餐點", "燒烤由船員烤，菜單見下方"], ["注意", "6 小時在海上，帽子、防曬、水母衣、暈船藥都要帶；小孩午睡可在船艙"]], "menu": {"title": "船上燒烤菜單", "items": ["新鮮沙拉", "烤時令蔬菜（如玉米、南瓜、茄子和甜椒）", "什錦烤肉（牛肉、豬肉和雞肉）", "香腸", "海鮮（如蝦子和扇貝）", "麵包或米飯", "時令新鮮水果"]}}], "guide": {"title": "地陪（會中文的日本人）", "en": "Local guide", "desc": "目前只有中之島海岸的熱帶魚＆珊瑚浮潛找到中文教練，觀光船、透明獨木舟、海龜浮潛、雙體船都沒有。如果要安排這些活動，建議請一位地陪同行，已經找到 9/26、9/27 有空的人選。", "basics": [["可預約日期", "9/26（六）、9/27（日）"], ["時間", "9 小時"], ["費用", "¥42,000 ≈ NT$8,600（一天）"], ["能做什麼", "全程中文溝通、跟業者確認集合點與時間、幫小孩穿裝備時翻譯注意事項、臨時狀況處理"]]}, "photos": {"seasky": [1, 2, 3, 4, 5, 6, 7, 8], "clearkayak": [1, 2, 3, 4, 5, 6, 7, 8], "turtle": [1, 2, 3, 4, 5, 6, 7, 8], "nakanoshima": [1, 2, 3, 4, 5, 6, 7, 8], "catamaran": [1, 2, 3, 4, 5, 6, 7, 8]}};
+</script>
+<script>
+(function(){
+  var D=window.D; if(!D||!D.acts) return;
+  var $=function(id){ return document.getElementById(id); };
+  var esc=function(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); };
+  var maps=function(q){ return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q); };
+  var FIT={ok:"✅ 4 歲、6 歲都能參加",mid:"⚠️ 有條件",no:"🚫 小孩不行"};
+
+  function gallery(pk){
+    var ph=(D.photos[pk]||[]); if(!ph.length) return "";
+    return '<div class="gallery">'+ph.map(function(n,i){ return '<img src="img/'+pk+'/t'+n+'.jpg" data-full="img/'+pk+'/'+n+'.jpg" data-pk="'+pk+'" data-i="'+i+'" alt="'+esc(pk)+' 照片 '+(i+1)+'" loading="lazy">'; }).join("")+'</div><div class="gal-hint">◂ 左右滑動看更多（'+ph.length+' 張）・點圖放大 ▸</div>';
+  }
+  function opCard(o){
+    var kv=function(k,v){ return v?'<div class="kv"><b>'+esc(k)+'</b>：'+esc(v)+'</div>':''; };
+    return '<div class="card">'+
+      '<h3>'+esc(o.name)+(o.en?' <span class="en">'+esc(o.en)+'</span>':'')+'</h3>'+
+      (o.chips&&o.chips.length?'<div class="chips">'+o.chips.map(function(c){ return '<span class="chip">'+esc(c)+'</span>'; }).join("")+'</div>':'')+
+      (o.fit?'<div class="fit '+esc(o.fit.split("|")[0])+'"><b>'+esc(FIT[o.fit.split("|")[0]]||"")+'</b>　'+esc(o.fit.split("|")[1]||"")+'</div>':'')+
+      (o.desc?'<p class="desc">'+esc(o.desc)+'</p>':'')+
+      kv('價格',o.price)+kv('時間',o.time)+kv('年齡',o.age)+kv('集合／出發',o.place)+kv('🚗 離瑰麗車程',o.drive)+kv('11 人團',o.group)+kv('預約',o.booking)+kv('注意',o.note)+
+      (o.photos?gallery(o.photos):'')+
+      '<div class="btns">'+(o.web?'<a class="maps-btn" target="_blank" rel="noopener" href="'+esc(o.web)+'">'+esc(o.webLabel||'官網／預約')+'</a>':'')+(o.mapsQ?'<a class="maps-btn ghost" target="_blank" rel="noopener" href="'+maps(o.mapsQ)+'">地圖</a>':'')+'</div>'+
+    '</div>';
+  }
+  $("summary").innerHTML=(D.summary?'<div class="card"><h3>'+esc(D.summary.title)+' <span class="en">'+esc(D.summary.en||"")+'</span></h3><p class="desc">'+esc(D.summary.desc)+'</p><ul class="plan">'+D.summary.items.map(function(it){ return '<li><b>'+esc(it[0])+'</b>　'+esc(it[1])+(it[2]?'<small>'+esc(it[2])+'</small>':'')+'</li>'; }).join("")+'</ul></div>':'')+
+    (D.guide?'<div class="card"><h3>'+esc(D.guide.title)+' <span class="en">'+esc(D.guide.en||"")+'</span></h3><p class="desc">'+esc(D.guide.desc)+'</p>'+D.guide.basics.map(function(b){ return '<div class="kv"><b>'+esc(b[0])+'</b>：'+esc(b[1])+'</div>'; }).join("")+'</div>':'')+
+    ((D.summary&&D.summary.warn)?'<div class="warn-box">'+esc(D.summary.warn)+'</div>':'');
+  $("acts").innerHTML=D.acts.map(function(a){
+    return '<section class="act" id="'+esc(a.id)+'"><div class="sec-title">'+esc(a.title)+'</div><div class="sec-sub">'+esc(a.sub)+'</div>'+
+      '<div class="act-head"><div class="meta">'+(a.meta||[]).map(function(m){ return '<span>'+esc(m)+'</span>'; }).join("")+'</div><p>'+esc(a.intro)+'</p></div>'+
+      (a.fit?'<div class="fit '+esc(a.fit.split("|")[0])+'"><b>'+esc(FIT[a.fit.split("|")[0]]||"")+'</b>　'+esc(a.fit.split("|")[1]||"")+'</div>':'')+
+      gallery(a.id)+
+      (a.basics?'<div class="card"><h3>基本資訊</h3>'+a.basics.map(function(b){ return '<div class="kv'+(b[2]==='hl'?' kv-hl':'')+'">'+(b[2]==='hl'?'⭐ ':'')+'<b>'+esc(b[0])+'</b>：'+esc(b[1])+'</div>'; }).join("")+
+        (a.menu?'<div class="menu"><b>'+esc(a.menu.title)+'</b><ul>'+a.menu.items.map(function(m){ return '<li>'+esc(m)+'</li>'; }).join("")+'</ul></div>':'')+
+        ((a.web||a.mapsQ)?'<div class="btns">'+(a.web?'<a class="maps-btn" target="_blank" rel="noopener" href="'+esc(a.web)+'">'+esc(a.webLabel||'官網／預約')+'</a>':'')+(a.mapsQ?'<a class="maps-btn ghost" target="_blank" rel="noopener" href="'+maps(a.mapsQ)+'">地圖</a>':'')+'</div>':'')+
+      '</div>':'')+
+      (a.tips?'<div class="tip">'+esc(a.tips)+'</div>':'')+
+      (a.groups||[]).map(function(g){ return '<div class="pick-group">'+esc(g.title)+'</div>'+g.items.map(opCard).join(""); }).join("")+
+    '</section>';
+  }).join("");
+
+  /* 照片放大 */
+  var lb=$("lb"), lbImg=lb.querySelector("img"), lbCap=lb.querySelector(".cap"), curPk=null, curI=0;
+  function showLb(pk,i){ var ph=D.photos[pk]||[]; if(!ph.length) return; curPk=pk; curI=(i+ph.length)%ph.length; lbImg.src="img/"+pk+"/"+ph[curI]+".jpg"; lbCap.textContent=(D.names[pk]||pk)+"　"+(curI+1)+" / "+ph.length; lb.classList.add("on"); document.body.style.overflow="hidden"; }
+  function hideLb(){ lb.classList.remove("on"); document.body.style.overflow=""; }
+  document.addEventListener("click",function(ev){ var im=ev.target.closest(".gallery img[data-full]"); if(im) showLb(im.dataset.pk,+im.dataset.i); });
+  lb.querySelector(".x").addEventListener("click",hideLb);
+  lb.querySelector(".prev").addEventListener("click",function(ev){ ev.stopPropagation(); showLb(curPk,curI-1); });
+  lb.querySelector(".next").addEventListener("click",function(ev){ ev.stopPropagation(); showLb(curPk,curI+1); });
+  lb.addEventListener("click",function(ev){ if(ev.target===lb||ev.target===lbCap) hideLb(); });
+  document.addEventListener("keydown",function(ev){ if(!lb.classList.contains("on")) return; if(ev.key==="Escape") hideLb(); if(ev.key==="ArrowLeft") showLb(curPk,curI-1); if(ev.key==="ArrowRight") showLb(curPk,curI+1); });
+  var tx=null; lb.addEventListener("touchstart",function(e){ tx=e.touches[0].clientX; },{passive:true});
+  lb.addEventListener("touchend",function(e){ if(tx==null) return; var dx=e.changedTouches[0].clientX-tx; tx=null; if(Math.abs(dx)>50) showLb(curPk,curI+(dx<0?1:-1)); },{passive:true});
+
+  var QA=/[?&]qa=1/.test(location.search);
+  if(QA){ document.querySelectorAll('.rise').forEach(function(e){ e.style.animation='none'; e.style.opacity='1'; e.style.transform='none'; }); var st=document.createElement('style'); st.textContent='*,*::before,*::after{transition:none!important;animation:none!important}'; document.head.appendChild(st); }
+})();
+</script>
+</body>
+</html>

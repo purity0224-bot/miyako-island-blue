@@ -323,6 +323,8 @@
   .detail-open div{margin:3px 0}
   .detail-open b{color:var(--navy)}
   .chip.rec{background:var(--ocean);color:#fff;border-color:var(--ocean);font-weight:700}
+  .card.rec{background:#fdf0e4;border:2px solid var(--ocean);box-shadow:0 2px 14px rgba(207,122,90,.18)}
+  .card.rec h3{color:#8a4a30}
   /* ── 已訂好 ── */
   .booked-box{background:rgba(92,138,90,.08);border:2px solid var(--grass);border-radius:16px;padding:18px 18px 14px;margin:6px 0 18px;position:relative}
   .booked-tag{display:inline-block;background:var(--grass);color:#fff;font-size:.78rem;letter-spacing:.12em;padding:3px 12px;border-radius:999px;margin-bottom:8px;font-weight:700}
@@ -884,7 +886,7 @@ window.tripData = {
     const pp = (window.POI_PHOTOS||{})[b.pk]||[];
     const ph = pp.length ? `<div class="gallery">${pp.map((u,i)=>`<img src="${u}" alt="${esc(b.name)} 照片 ${i+1}" loading="lazy">`).join("")}</div><div class="gal-hint">◂ 左右滑動看更多照片（${pp.length} 張）▸</div>` : "";
     return `${b.heading?`<div class="pick-group">${esc(b.heading)}</div>`:""}
-    <div class="card">
+    <div class="card${b.rec?' rec':''}">
       <h3>${esc(b.name)}</h3>
       <div class="chips">${b.rec?`<span class="chip rec">⭐ ${esc(b.rec)}</span>`:""}<span class="chip">${esc(b.when)}</span></div>
       <p class="desc">${esc(b.desc)}</p>

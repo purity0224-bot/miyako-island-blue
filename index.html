@@ -529,7 +529,9 @@
         <div class="ev"><div class="time">20:30</div><h4>晚餐：瑰麗酒店 NAGI 餐廳</h4>
           <p>吃完直接回房間休息。大家用餐的時間，我們先處理 check-in 事宜。</p>
           <div class="kv"><b>最晚點餐時間</b>：21:30</div>
-          <div class="kv"><b>菜單</b>：等待飯店傳菜單中，收到後補上</div></div>
+          <div class="kv"><b>菜單</b>：等待飯店傳菜單中，收到後補上</div>
+          <div class="gallery"><img src="main-img/itin_nagi/1.jpg" alt="NAGI 照片 1" loading="lazy"><img src="main-img/itin_nagi/2.jpg" alt="NAGI 照片 2" loading="lazy"><img src="main-img/itin_nagi/3.jpg" alt="NAGI 照片 3" loading="lazy"><img src="main-img/itin_nagi/4.jpg" alt="NAGI 照片 4" loading="lazy"><img src="main-img/itin_nagi/5.jpg" alt="NAGI 照片 5" loading="lazy"><img src="main-img/itin_nagi/6.jpg" alt="NAGI 照片 6" loading="lazy"><img src="main-img/itin_nagi/7.jpg" alt="NAGI 照片 7" loading="lazy"><img src="main-img/itin_nagi/8.jpg" alt="NAGI 照片 8" loading="lazy"><img src="main-img/itin_nagi/9.jpg" alt="NAGI 照片 9" loading="lazy"><img src="main-img/itin_nagi/10.jpg" alt="NAGI 照片 10" loading="lazy"><img src="main-img/itin_nagi/11.jpg" alt="NAGI 照片 11" loading="lazy"><img src="main-img/itin_nagi/12.jpg" alt="NAGI 照片 12" loading="lazy"></div><div class="gal-hint">◂ 左右滑動看更多・點圖放大 ▸</div>
+          <a class="maps-btn" href="#r-nagi" data-go-sec="hotel-dining-sec" data-go-target="r-nagi" style="margin-top:12px">看飯店章的 NAGI 介紹</a></div>
       </div>
     </div>
 
@@ -1049,7 +1051,7 @@ window.tripData = {
     const rpp = (window.REST_PHOTOS||{})[r.pk]||[];
     const rph = rpp.length ? `<div class="gallery">${rpp.map((u,i)=>`<img src="${u}" alt="${esc(r.name)} 照片 ${i+1}" loading="lazy">`).join("")}</div>` : "";
     return `
-    <div class="card">
+    <div class="card" id="r-${esc(r.pk)}">
       <h3>${esc(r.name)} <span class="en">${esc(r.en||"")}</span></h3>
       <div class="chips">
         <span class="chip">${esc(r.cuisine)}</span>
@@ -1204,6 +1206,8 @@ window.tripData = {
     },520);
   }
   dockBtns.forEach(function(b){ b.addEventListener('click',function(){ switchCh(+b.dataset.ch); }); });
+  window.__goSec=function(sec,target){ var n=SEC2CH[sec]; if(n) switchCh(n,target||sec); };
+  document.addEventListener('click',function(ev){ var a=ev.target.closest('a[data-go-sec]'); if(a){ ev.preventDefault(); window.__goSec(a.dataset.goSec, a.dataset.goTarget); } });
 
   /* 章節列：捲過封面、內容進畫面才浮出 */
   var dockIO=new IntersectionObserver(function(es){
@@ -1298,7 +1302,7 @@ window.tripData = {
   /* 卡片＝原餐廳卡，再加：右上角愛心、chips 下方訂位狀況列 */
   function card(p){
     var tmp=document.createElement("div"); tmp.innerHTML=C[KIND[p.from]](p.base);
-    var c=tmp.firstElementChild; c.classList.add("pcard"); c.dataset.pk=p.pk; if(isLiked(p.pk)) c.classList.add("liked");
+    var c=tmp.firstElementChild; c.classList.add("pcard"); c.dataset.pk=p.pk; c.removeAttribute("id"); if(isLiked(p.pk)) c.classList.add("liked");
     var h=document.createElement("button"); h.type="button"; h.className="heart"; h.dataset.pk=p.pk;
     h.setAttribute("aria-pressed",isLiked(p.pk)?"true":"false"); h.setAttribute("aria-label","想吃 "+p.name); h.textContent=isLiked(p.pk)?"♥":"♡";
     var lb=document.createElement("span"); lb.className="heart-lb"; lb.textContent="想吃";

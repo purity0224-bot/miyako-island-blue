@@ -323,6 +323,41 @@
   .detail-open div{margin:3px 0}
   .detail-open b{color:var(--navy)}
   .chip.rec{background:var(--ocean);color:#fff;border-color:var(--ocean);font-weight:700}
+  /* ── 行程表 ── */
+  .day-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:0;margin-bottom:22px;overflow:hidden;box-shadow:0 1px 4px rgba(38,52,58,.05)}
+  .itd-head{display:flex;align-items:baseline;gap:12px;padding:16px 20px;background:linear-gradient(135deg,rgba(31,138,157,.12),rgba(31,138,157,.03));border-bottom:1px solid var(--line)}
+  .itd-head .d{font-family:var(--serif-en);font-style:italic;font-size:1.6rem;color:var(--copper);line-height:1}
+  .itd-head .w{font-size:.8rem;color:var(--ink-soft);letter-spacing:.1em}
+  .itd-head .t{font-size:1.05rem;color:var(--navy);font-weight:700;margin-left:auto;text-align:right}
+  .itd-body{padding:6px 20px 16px}
+  .ev{position:relative;padding:14px 0 14px 78px;border-bottom:1px dashed var(--line)}
+  .ev:last-child{border-bottom:none}
+  .ev .time{position:absolute;left:0;top:16px;width:64px;font-family:var(--serif-en);font-size:.95rem;color:var(--copper);font-weight:700;letter-spacing:.02em}
+  .ev .time.empty{color:#b9ab93;font-weight:400;font-size:.8rem}
+  .ev h4{font-size:1.02rem;color:var(--navy);letter-spacing:.03em;margin:0 0 4px;line-height:1.5}
+  .ev p{font-size:.9rem;color:#5a4c3c;line-height:1.75;margin:2px 0}
+  .ev .kv{font-size:.88rem;margin:4px 0}
+  .ev .kv b{color:var(--navy)}
+  .ev ul{margin:4px 0 4px 18px;font-size:.88rem;color:#5a4c3c;line-height:1.75}
+  .ev .fee{margin-top:8px;padding:8px 12px;border-radius:0 8px 8px 0;border-left:3px solid var(--gold);background:var(--tip-bg);font-size:.88rem;line-height:1.7}
+  .ev .fee b{color:var(--navy)}
+  .ev .cancel{font-size:.8rem;color:var(--red);margin-top:4px}
+  .ev .note{margin-top:8px;padding:8px 12px;border-radius:8px;background:rgba(31,138,157,.08);font-size:.86rem;line-height:1.7;color:#3f5f66}
+  .ev .gallery{margin-top:10px}
+  .ev .gallery img{height:130px}
+  .ev .drive{font-size:.8rem;color:#8a7d6b;letter-spacing:.06em;margin-top:8px}
+  .ev.free{background:repeating-linear-gradient(135deg,transparent 0 6px,rgba(31,138,157,.05) 6px 12px);border-radius:10px;padding-left:78px}
+  .flight{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-size:.92rem;margin:6px 0}
+  .flight .code{font-family:var(--serif-en);font-weight:700;color:var(--navy);letter-spacing:.06em}
+  .flight .arrow{color:var(--copper)}
+  .flight .cls{font-size:.74rem;padding:1px 8px;border-radius:999px;background:var(--tip-bg);color:var(--navy);border:1px solid var(--line)}
+  .cmp{width:100%;border-collapse:collapse;font-size:.86rem;margin:8px 0 4px}
+  .cmp th,.cmp td{border:1px solid var(--line);padding:7px 8px;text-align:left;vertical-align:top;line-height:1.6}
+  .cmp th{background:var(--tip-bg);color:var(--navy);font-weight:700;white-space:nowrap}
+  .cmp td.ok{background:rgba(92,138,90,.1);color:#3f6a3d}
+  .cmp td.bad{background:var(--warn-bg);color:#8a3a2c}
+  .rate-note{font-size:.76rem;color:#8a7d6b;letter-spacing:.04em;margin:-8px 0 16px}
+  @media (max-width:600px){ .ev{padding-left:0;padding-top:12px} .ev .time{position:static;display:block;margin-bottom:2px} .itd-head{flex-wrap:wrap} .itd-head .t{margin-left:0;width:100%;text-align:left} }
   .card.rec{background:#fff6cc;border:2px solid #e0b530;box-shadow:0 2px 14px rgba(224,181,48,.25)}
   .card.rec h3{color:#7a5a00}
   .card.rec .chip.rec{background:#e0b530;border-color:#e0b530;color:#3a2c00}
@@ -417,16 +452,99 @@
 <!-- 底部章節列（捲過封面後浮出）；改章節名時同步改 JS 的 CH_TITLE 與 SEC2CH -->
 <nav id="chnav" aria-label="章節切換">
   <div class="inner">
-    <button type="button" data-ch="1" class="active">總覽</button>
-    <button type="button" data-ch="2">飯店</button>
-    <button type="button" data-ch="3">YARD</button>
-    <button type="button" data-ch="4" class="pick-nav">♥ 選餐廳</button>
-    <button type="button" data-ch="5">景點</button>
-    <button type="button" data-ch="6"><span class="lf">大人宵夜</span><span class="ls">宵夜</span></button>
+    <button type="button" data-ch="1" class="active itin-nav">行程表</button>
+    <button type="button" data-ch="2">總覽</button>
+    <button type="button" data-ch="3">飯店</button>
+    <button type="button" data-ch="4">YARD</button>
+    <button type="button" data-ch="5" class="pick-nav">♥ 選餐廳</button>
+    <button type="button" data-ch="6">景點</button>
+    <button type="button" data-ch="7"><span class="lf">大人宵夜</span><span class="ls">宵夜</span></button>
   </div>
 </nav>
 
 <div class="wrap">
+
+<div class="chapter" id="ch-itin">
+  <section id="itinerary">
+    <div class="sec-title">行程表</div>
+    <div class="sec-sub">9/25（五）— 9/28（一）・已確定的活動與餐廳・費用附新台幣</div>
+    <div class="rate-note">新台幣以 2026-09-19 匯率 1 日圓 ≈ 0.2026 換算，取整百</div>
+
+    <div class="day-card">
+      <div class="itd-head"><span class="d">9.25</span><span class="w">FRI</span><span class="t">抵達宮古島</span></div>
+      <div class="itd-body">
+        <div class="ev"><div class="time">12:00</div><h4>台北桃園 → 沖繩那霸</h4>
+          <div class="flight"><span class="code">JX870</span><span>星宇航空</span><span class="cls">商務艙</span></div>
+          <p>12:00 桃園第一航廈起飛，14:40 抵達那霸國際線航廈，飛行 1 小時 40 分。</p></div>
+        <div class="ev"><div class="time">17:55</div><h4>那霸 → 宮古島</h4>
+          <div class="flight"><span class="code">NU573</span><span>日本越洋航空</span><span class="cls">商務艙</span></div>
+          <p>17:55 那霸國內線航廈起飛，18:45 抵達宮古機場，飛行 50 分。那霸轉機約 3 小時，國際線到國內線航廈要走一段，先過關領行李再去。</p></div>
+        <div class="ev"><div class="time">19:30</div><h4>接機 → 宮古島瑰麗 Check-in</h4>
+          <p>領行李、取車後約 19:30 出發，機場到瑰麗約 20 分。</p>
+          <div class="drive">🚗 機場 → 瑰麗 約 20 分</div></div>
+        <div class="ev free"><div class="time empty">晚餐</div><h4>晚餐待定</h4><p>建議直接在瑰麗 NAGI（有兒童菜單，晚餐到 21:30），或途中平良トゥリバー的 Hilton Azure 自助餐、Canopy MA-SANS。</p></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="itd-head"><span class="d">9.26</span><span class="w">SAT</span><span class="t">中之島浮潛・CHOMA</span></div>
+      <div class="itd-body">
+        <div class="ev free"><div class="time empty">上午</div><h4>自由活動</h4><p>先留空，看大家想去哪裡走走。可以參考「景點」章的四大絕景與口袋名單。</p></div>
+        <div class="ev free"><div class="time empty">午餐</div><h4>午餐未定</h4><p>依上午去的地方，安排那附近的餐廳。</p></div>
+        <div class="ev"><div class="time">14:00</div><h4>中之島 熱帶魚＆珊瑚礁浮潛（中文教練）</h4>
+          <p>下地島西岸的礁湖，浪小水淺，從岸邊走進去就是珊瑚和熱帶魚，4 歲、6 歲都能參加，全程中文教練帶。</p>
+          <div class="fee"><b>費用</b>：大人 ¥11,000 × 11 人 ＝ ¥121,000 ≈ NT$24,500<div class="cancel">※ 若因客人自身原因取消，取消費為 100%</div></div>
+          <div class="note">小提醒：要自行準備毛巾，現場沒有廁所及盥洗室，已請業者多準備一些沖洗身體的水，出發前建議先上廁所。</div>
+          <div class="gallery"><img src="main-img/itin_naka/1.jpg" alt="itin_naka 照片 1" loading="lazy"><img src="main-img/itin_naka/2.jpg" alt="itin_naka 照片 2" loading="lazy"><img src="main-img/itin_naka/3.jpg" alt="itin_naka 照片 3" loading="lazy"><img src="main-img/itin_naka/4.jpg" alt="itin_naka 照片 4" loading="lazy"><img src="main-img/itin_naka/5.jpg" alt="itin_naka 照片 5" loading="lazy"><img src="main-img/itin_naka/6.jpg" alt="itin_naka 照片 6" loading="lazy"><img src="main-img/itin_naka/7.jpg" alt="itin_naka 照片 7" loading="lazy"><img src="main-img/itin_naka/8.jpg" alt="itin_naka 照片 8" loading="lazy"></div><div class="gal-hint">◂ 左右滑動看更多照片 ▸</div>
+          <div class="drive">🚗 瑰麗 → 中之島 約 35–40 分（過伊良部大橋）</div></div>
+        <div class="ev"><div class="time">結束後</div><h4>回飯店盥洗</h4></div>
+        <div class="ev"><div class="time">18:00</div><h4>晚餐：瑰麗 CHOMA（苧麻）</h4>
+          <p>瑰麗館內的日本料理，壽司、鐵板燒、天婦羅、燒鳥四種吧檯，第一輪 17:30 到 18:00 入座最適合帶小孩。走路就到，不用開車。</p></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="itd-head"><span class="d">9.27</span><span class="w">SUN</span><span class="t">透明獨木舟・YUSARABI・海龜浮潛・喜八</span></div>
+      <div class="itd-body">
+        <div class="ev"><div class="time">10:20</div><h4>出發前往獨木舟地點</h4><div class="drive">🚗 瑰麗 → 獨木舟集合點 約 25 分</div></div>
+        <div class="ev"><div class="time">11:00</div><h4>透明獨木舟（11:00 – 12:30）</h4>
+          <ul><li>5 艘：3 人、3 人、2 人、2 人、2 人</li><li>包含無人機空拍</li><li>有淋浴設備及更衣空間</li><li>褲子可能會濕，請準備替換的衣物</li></ul>
+          <div class="fee"><b>費用</b>：大人 ¥6,400 × 10 人 ＝ ¥64,000 ≈ NT$13,000<br>※ 導遊、4 歲小朋友免費<div class="cancel">※ 若因客人自身原因取消，取消費為 100%</div></div>
+          <div class="gallery"><img src="main-img/itin_kayak/1.jpg" alt="itin_kayak 照片 1" loading="lazy"><img src="main-img/itin_kayak/2.jpg" alt="itin_kayak 照片 2" loading="lazy"><img src="main-img/itin_kayak/3.jpg" alt="itin_kayak 照片 3" loading="lazy"><img src="main-img/itin_kayak/4.jpg" alt="itin_kayak 照片 4" loading="lazy"><img src="main-img/itin_kayak/5.jpg" alt="itin_kayak 照片 5" loading="lazy"><img src="main-img/itin_kayak/6.jpg" alt="itin_kayak 照片 6" loading="lazy"></div><div class="gal-hint">◂ 左右滑動看更多照片 ▸</div>
+          <div class="drive">🚗 獨木舟 → YUSARABI 約 10 分</div></div>
+        <div class="ev"><div class="time">13:00</div><h4>午餐：YUSARABI 海景露台餐廳</h4>
+          <ul><li>12 位套餐，其中 2 位小朋友不吃生食</li><li>另外 1 位大人不能吃：蔥、洋蔥、青魚、香菜</li><li>安排半包廂，使用 3 張桌子</li></ul>
+          <p>城辺友利的海崖上，露台正對太平洋，午餐套餐 ¥5,550 ≈ NT$1,100 起。</p></div>
+        <div class="ev"><div class="time">15:15</div><h4>海龜浮潛（15:15 – 16:45）・地點改為保良海灘</h4>
+          <p>原定新城海岸，地陪與業者討論後改到保良海灘（東平安名海灘），理由如下。</p>
+          <table class="cmp">
+            <tr><th></th><th>新城海岸（原定）</th><th>保良海灘（改後）</th></tr>
+            <tr><th>地形</th><td class="bad">直接面向外海</td><td class="ok">在海灣裡，有岬角擋著</td></tr>
+            <tr><th>浪況</th><td class="bad">容易遇到大浪，現在受季節風影響海流強</td><td class="ok">浪比較穩定</td></tr>
+            <tr><th>水深</th><td>淺</td><td class="ok">一樣淺</td></tr>
+            <tr><th>結論</th><td class="bad">現在不適合浮潛，真的不推薦</td><td class="ok">以安全管理考量，地陪與業者都推薦</td></tr>
+          </table>
+          <div class="fee"><b>費用</b>：總金額 ¥75,000／11 位 ≈ NT$15,200<div class="cancel">※ 若因客人自身原因取消，取消費為 100%</div></div>
+          <div class="note">小提醒：要自行準備毛巾，現場沒有廁所及盥洗室，已請業者多準備一些沖洗身體的水，出發前建議先上廁所。</div>
+          <div class="gallery"><img src="main-img/boraga/1.jpg" alt="boraga 照片 1" loading="lazy"><img src="main-img/boraga/2.jpg" alt="boraga 照片 2" loading="lazy"><img src="main-img/boraga/3.jpg" alt="boraga 照片 3" loading="lazy"><img src="main-img/boraga/4.jpg" alt="boraga 照片 4" loading="lazy"><img src="main-img/boraga/5.jpg" alt="boraga 照片 5" loading="lazy"><img src="main-img/boraga/6.jpg" alt="boraga 照片 6" loading="lazy"><img src="main-img/boraga/7.jpg" alt="boraga 照片 7" loading="lazy"><img src="main-img/boraga/8.jpg" alt="boraga 照片 8" loading="lazy"></div><div class="gal-hint">◂ 左右滑動看更多照片 ▸</div>
+          <a class="maps-btn" target="_blank" rel="noopener" href="https://maps.app.goo.gl/RsaWBhoJtCK8BrDBA" style="margin-top:12px">保良海灘地圖</a>
+          <div class="drive">🚗 YUSARABI → 保良海灘 約 10 分・保良海灘 → 喜八 約 40 分</div></div>
+        <div class="ev"><div class="time">18:00</div><h4>晚餐：宮古牛焼肉 喜八 別館</h4>
+          <p>19 位、訂位名「サイ」、用餐到 19:45、現金支付，座位安排在同一區；入座先點一些餐點比較不用等。詳細見「選餐廳」章的已訂好區塊。</p></div>
+      </div>
+    </div>
+
+    <div class="day-card">
+      <div class="itd-head"><span class="d">9.28</span><span class="w">MON</span><span class="t">返程</span></div>
+      <div class="itd-body">
+        <div class="ev free"><div class="time empty">上午</div><h4>退房、前往下地島機場</h4><p>瑰麗到下地島機場約 35 分（過伊良部大橋），國際線建議起飛前 2 小時到。</p><div class="drive">🚗 瑰麗 → 下地島機場 約 35 分</div></div>
+        <div class="ev"><div class="time">14:00</div><h4>下地島 → 台北桃園</h4>
+          <div class="flight"><span class="code">JX891</span><span>星宇航空</span><span class="cls">商務艙</span></div>
+          <p>14:00 下地島機場起飛，14:10 抵達桃園第一航廈（台灣時間），飛行 1 小時 10 分。</p></div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <div class="chapter" id="ch-1">
   <section class="scene" id="scene-open">
@@ -987,8 +1105,8 @@ window.tripData = {
   var dock=document.getElementById('chnav');
   var dockBtns=[].slice.call(dock.querySelectorAll('button'));
   var curtain=document.getElementById('ch-curtain');
-  var CH_TITLE={1:'總覽',2:'飯店',3:'YARD',4:'選餐廳',5:'景點',6:'大人宵夜'};
-  var SEC2CH={overview:1,'scene-open':1,hotels:2,'scene-hotels':2,'hotel-dining-sec':2,yard:3,pick:4,scenic:5,backup:5,shops:5,night:6};
+  var CH_TITLE={1:'行程表',2:'總覽',3:'飯店',4:'YARD',5:'選餐廳',6:'景點',7:'大人宵夜'};
+  var SEC2CH={itinerary:1,overview:2,'scene-open':2,hotels:3,'scene-hotels':3,'hotel-dining-sec':3,yard:4,pick:5,scenic:6,backup:6,shops:6,night:7};
   var cur=0, busy=false;
 
   function setCh(n){
